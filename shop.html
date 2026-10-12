@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shop Honey | 3W Ventures Honey</title>
+    <meta name="description" content="Shop 3W Ventures Honey in sizes from ⅛ litre to 25 litres. Delivery available within Lagos State.">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="announcement-bar">
+        Nature's Liquid Gold · Delivery within Lagos State
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="site-logo">
+                3W Ventures
+                <span>Honey</span>
+                <small>Nature's Liquid Gold</small>
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html" aria-current="page">Shop</a></li>
+                    <li><a href="about.html">Our Story</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li>
+                        <a href="cart.html">
+                            Cart (<span data-cart-count>0</span>)
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="page-hero">
+            <div class="container">
+                <span class="eyebrow">THE HONEY COLLECTION</span>
+                <h1>Find Your Perfect <span>Honey Size.</span></h1>
+                <p>
+                    From a small jar for your kitchen to larger quantities
+                    for your business, find the size that suits your needs.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+
+                <div class="shop-toolbar">
+                    <div>
+                        <h2>Our Honey</h2>
+                        <p>₦10,000 per litre</p>
+                    </div>
+
+                    <div class="shop-filters">
+                        <label for="size-filter">Filter by size</label>
+                        <select id="size-filter">
+                            <option value="all">All sizes</option>
+                            <option value="small">Small sizes</option>
+                            <option value="medium">1–5 litres</option>
+                            <option value="large">6–25 litres</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-grid" id="shop-products">
+
+                    <!-- 1/8 LITRE -->
+                    <article class="product-card" data-product-card data-litres="0.125">
+                        <div class="product-image">
+                            <img src="images/honey-125ml.jpg"
+                                 alt="Small honey jar"
+                                 loading="lazy">
+                        </div>
+
+                        <div class="product-content">
+                            <span class="product-badge">Small Size</span>
+                            <h3>⅛ Litre Honey</h3>
+                            <p>A small size for your everyday needs.</p>
+                            <span class="product-price">₦1,250</span>
+
+                            <div class="product-quantity">
+                                <button type="button" data-product-minus aria-label="Decrease quantity">−</button>
+                                <input type="number" data-product-quantity value="1" min="1" max="99" aria-label="Quantity">
+                                <button type="button" data-product-plus aria-label="Increase quantity">+</button>
+                            </div>
+
+                            <button type="button" class="button"
+                                data-product-id="honey-eighth-litre"
+                                data-product-name="3W Ventures Honey"
+                                data-product-size="⅛ Litre"
+                                data-litres="0.125">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 1/4 LITRE -->
+                    <article class="product-card" data-product-card data-litres="0.25">
+                        <div class="product-image">
+                            <img src="images/honey-250ml.jpg"
+                                 alt="Quarter-litre honey jar"
+                                 loading="lazy">
+                        </div>
+
+                        <div class="product-content">
+                            <span class="product-badge">Popular Size</span>
+                            <h3>¼ Litre Honey</h3>
+                            <p>A practical size for everyday kitchen use.</p>
+                            <span class="product-price">₦2,500</span>
+
+                            <div class="product-quantity">
+                                <button type="button" data-product-minus aria-label="Decrease quantity">−</button>
+                                <input type="number" data-product-quantity value="1" min="1" max="99" aria-label="Quantity">
+                                <button type="button" data-product-plus aria-label="Increase quantity">+</button>
+                            </div>
+
+                            <button type="button" class="button"
+                                data-product-id="honey-quarter-litre"
+                                data-product-name="3W Ventures Honey"
+                                data-product-size="¼ Litre"
+                                data-litres="0.25">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 1/2 LITRE -->
+                    <article class="product-card" data-product-card data-litres="0.5">
+                        <div class="product-image">
+                            <img src="images/honey-500ml.jpg"
+                                 alt="Half-litre honey jar"
+                                 loading="lazy">
+                        </div>
+
+                        <div class="product-content">
+                            <span class="product-badge">Everyday Favourite</span>
+                            <h3>½ Litre Honey</h3>
+                            <p>A convenient choice for regular household use.</p>
+                            <span class="product-price">₦5,000</span>
+
+                            <div class="product-quantity">
+                                <button type="button" data-product-minus aria-label="Decrease quantity">−</button>
+                                <input type="number" data-product-quantity value="1" min="1" max="99" aria-label="Quantity">
+                                <button type="button" data-product-plus aria-label="Increase quantity">+</button>
+                            </div>
+
+                            <button type="button" class="button"
+                                data-product-id="honey-half-litre"
+                                data-product-name="3W Ventures Honey"
+                                data-product-size="½ Litre"
+                                data-litres="0.5">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="delivery-note">
+                    <strong>Delivery information</strong>
+                    <p>
+                        Delivery is available within Lagos State only.
+                        Your delivery fee will be confirmed after your
+                        address has been reviewed and before payment.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="cta">
+                    <span class="eyebrow">3W VENTURES HONEY</span>
+                    <h2>A Little Sweetness Goes a Long Way.</h2>
+                    <p>
+                        Need help selecting your quantity or placing an order?
+                        Our team is ready to assist.
+                    </p>
+                    <a href="contact.html" class="button">Contact Us</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+
+                <div>
+                    <h3>3W Ventures Honey</h3>
+                    <p>Nature's Liquid Gold.</p>
+                    <p>Bringing sweetness to your everyday moments.</p>
+                </div>
+
+                <div>
+                    <h3>Explore</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop Honey</a></li>
+                        <li><a href="about.html">Our Story</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Customer Care</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Delivery</h3>
+                    <p>Delivery within Lagos State only.</p>
+                    <p>Fees are confirmed before payment.</p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="copyright-year">2026</span> 3W Ventures Honey. All rights reserved.</p>
+                <p>Nature's Liquid Gold.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("copyright-year").textContent =
+            new Date().getFullYear();
+
+        /*
+         * Generate all whole-litre sizes from 1L to 25L.
+         * The shared script.js handles the cart and quantity controls.
+         */
+        (() => {
+            const grid = document.getElementById("shop-products");
+            const filter = document.getElementById("size-filter");
+
+            const money = amount =>
+                new Intl.NumberFormat("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                    maximumFractionDigits: 0
+                }).format(amount);
+
+            const products = Array.from({ length: 25 }, (_, index) => {
+                const litres = index + 1;
+
+                return {
+                    litres,
+                    price: litres * 10000,
+                    id: `honey-${litres}-litre`,
+                    size: `${litres} ${litres === 1 ? "Litre" : "Litres"}`
+                };
+            });
+
+            function renderProducts() {
+                grid.querySelectorAll("[data-generated-product]")
+                    .forEach(card => card.remove());
+
+                const selected = filter.value;
+
+                products
+                    .filter(product => {
+                        if (selected === "small") return false;
+                        if (selected === "medium") {
+                            return product.litres >= 1 && product.litres <= 5;
+                        }
+                        if (selected === "large") {
+                            return product.litres >= 6 && product.litres <= 25;
+                        }
+                        return true;
+                    })
+                    .forEach(product => {
+                        const card = document.createElement("article");
+
+                        card.className = "product-card";
+                        card.dataset.productCard = "";
+                        card.dataset.litres = product.litres;
+                        card.dataset.generatedProduct = "true";
+
+                        const image = product.litres <= 1
+                            ? "images/honey-hero.jpg"
+                            : "images/honey-500ml.jpg";
+
+                        card.innerHTML = `
+                            <div class="product-image">
+                                <img src="${image}"
+                                     alt="${product.size} honey"
+                                     loading="lazy">
+                            </div>
+
+                            <div class="product-content">
+                                <span class="product-badge">
+                                    ${product.litres >= 10 ? "Bulk Size" : "Available Size"}
+                                </span>
+
+                                <h3>${product.size} Honey</h3>
+
+                                <p>
+                                    ${product.litres >= 10
+                                        ? "A larger quantity for substantial honey needs."
+                                        : "Choose this size to suit your needs."}
+                                </p>
+
+                                <span class="product-price">
+                                    ${money(product.price)}
+                                </span>
+
+                                <div class="product-quantity">
+                                    <button type="button"
+                                        data-product-minus
+                                        aria-label="Decrease quantity">−</button>
+
+                                    <input type="number"
+                                        data-product-quantity
+                                        value="1"
+                                        min="1"
+                                        max="99"
+                                        aria-label="Quantity">
+
+                                    <button type="button"
+                                        data-product-plus
+                                        aria-label="Increase quantity">+</button>
+                                </div>
+
+                                <button type="button"
+                                    class="button"
+                                    data-product-id="${product.id}"
+                                    data-product-name="3W Ventures Honey"
+                                    data-product-size="${product.size}"
+                                    data-litres="${product.litres}">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        `;
+
+                        grid.appendChild(card);
+                    });
+            }
+
+            filter.addEventListener("change", renderProducts);
+            renderProducts();
+        })();
+    </script>
+<script src="java/java.js" defer></script>
+</body>
+</html>

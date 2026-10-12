@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Complete your 3W Ventures Honey order and arrange delivery within Lagos State."
+    >
+
+    <title>Checkout | 3W Ventures Honey</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <p>Delivering honey across Lagos State</p>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+
+        <div class="brand">
+            <a href="index.html" aria-label="3W Ventures Honey Homepage">
+                <span class="brand-name">3W VENTURES</span>
+                <span class="brand-subtitle">HONEY · NATURE'S LIQUID GOLD</span>
+            </a>
+        </div>
+
+        <nav class="main-navigation" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop Honey</a>
+            <a href="about.html">Our Story</a>
+            <a href="contact.html">Contact</a>
+
+            <a href="cart.html" class="cart-link">
+                Cart <span class="cart-count">0</span>
+            </a>
+        </nav>
+
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Checkout Introduction -->
+        <section class="page-hero checkout-hero">
+
+            <p class="eyebrow">ALMOST YOURS</p>
+
+            <h1>Complete Your Order</h1>
+
+            <p>
+                Provide your details and delivery location.
+                Your delivery fee will be confirmed before payment.
+            </p>
+
+        </section>
+
+        <!-- Checkout Layout -->
+        <section class="checkout-section">
+
+            <!-- Checkout Form -->
+            <div class="checkout-form-container">
+
+                <form id="checkout-form">
+
+                    <!-- Step 1: Customer Details -->
+                    <section class="checkout-step">
+
+                        <p class="eyebrow">STEP 01</p>
+
+                        <h2>Your Details</h2>
+
+                        <p>
+                            Enter the details we need to process your order.
+                        </p>
+
+                        <div class="form-group">
+
+                            <label for="full-name">Full Name *</label>
+
+                            <input
+                                type="text"
+                                id="full-name"
+                                name="full_name"
+                                autocomplete="name"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="email">Email Address *</label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                autocomplete="email"
+                                placeholder="Enter your email address"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="phone">Phone Number *</label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                autocomplete="tel"
+                                placeholder="Enter your phone number"
+                                required
+                            >
+
+                        </div>
+
+                    </section>
+
+                    <!-- Step 2: Delivery Location -->
+                    <section class="checkout-step">
+
+                        <p class="eyebrow">STEP 02</p>
+
+                        <h2>Delivery Location</h2>
+
+                        <p>
+                            We currently deliver within Lagos State, Nigeria.
+                            Provide a location where your order can be delivered.
+                        </p>
+
+                        <!-- Location Selection -->
+                        <div class="location-options">
+
+                            <h3>Choose How to Provide Your Location</h3>
+
+                            <div class="form-group">
+
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="location_method"
+                                        value="current_location"
+                                        required
+                                    >
+
+                                    Use My Current Location
+                                </label>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="location_method"
+                                        value="manual_address"
+                                    >
+
+                                    Enter My Address Manually
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Current Location -->
+                        <div class="form-group">
+
+                            <button
+                                type="button"
+                                id="get-location-button"
+                            >
+                                Use My Current Location
+                            </button>
+
+                            <p id="location-status" aria-live="polite">
+                                Your browser may request permission to access
+                                your location.
+                            </p>
+
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-group">
+
+                            <label for="delivery-address">
+                                Street Address *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="delivery-address"
+                                name="delivery_address"
+                                autocomplete="street-address"
+                                placeholder="House number, street and area"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="delivery-area">
+                                Area or Neighbourhood *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="delivery-area"
+                                name="delivery_area"
+                                placeholder="e.g. Ikeja, Lekki or Yaba"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="delivery-state">
+                                State *
+                            </label>
+
+                            <select
+                                id="delivery-state"
+                                name="delivery_state"
+                                required
+                            >
+
+                                <option value="">Select your state</option>
+
+                                <option value="Lagos" selected>
+                                    Lagos State
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="delivery-directions">
+                                Additional Directions (Optional)
+                            </label>
+
+                            <textarea
+                                id="delivery-directions"
+                                name="delivery_directions"
+                                rows="3"
+                                placeholder="Nearby landmarks or directions"
+                            ></textarea>
+
+                        </div>
+
+                        <!-- Map Placeholder -->
+                        <div class="delivery-map-container">
+
+                            <h3>Confirm Your Delivery Point</h3>
+
+                            <p>
+                                A map will be added during the integration
+                                stage so you can view or pin your delivery
+                                location.
+                            </p>
+
+                            <div
+                                id="delivery-map"
+                                aria-label="Delivery location map"
+                            >
+                                Interactive map will appear here.
+                            </div>
+
+                            <input
+                                type="hidden"
+                                id="latitude"
+                                name="latitude"
+                            >
+
+                            <input
+                                type="hidden"
+                                id="longitude"
+                                name="longitude"
+                            >
+
+                        </div>
+
+                    </section>
+
+                    <!-- Step 3: Delivery Fee -->
+                    <section class="checkout-step">
+
+                        <p class="eyebrow">STEP 03</p>
+
+                        <h2>Delivery Fee Confirmation</h2>
+
+                        <p>
+                            Your delivery fee depends on your location
+                            within Lagos State.
+                        </p>
+
+                        <div class="delivery-fee-notice">
+
+                            <h3>Awaiting Delivery Confirmation</h3>
+
+                            <p>
+                                Your delivery address must be reviewed
+                                before the delivery fee can be confirmed.
+                            </p>
+
+                            <p>
+                                You cannot change the delivery fee.
+                                It will be entered and confirmed by
+                                the business.
+                            </p>
+
+                        </div>
+
+                        <!-- These fields will be controlled by the
+                             checkout system, not by the customer. -->
+                        <div class="form-group">
+
+                            <label for="delivery-fee">
+                                Confirmed Delivery Fee
+                            </label>
+
+                            <input
+                                type="text"
+                                id="delivery-fee"
+                                value="Awaiting confirmation"
+                                readonly
+                            >
+
+                        </div>
+
+                        <p id="delivery-confirmation-status" aria-live="polite">
+                            Payment will become available after your delivery
+                            fee has been confirmed.
+                        </p>
+
+                    </section>
+
+                    <!-- Step 4: Payment -->
+                    <section class="checkout-step">
+
+                        <p class="eyebrow">STEP 04</p>
+
+                        <h2>Payment</h2>
+
+                        <p>
+                            Pay securely through Paystack after your
+                            delivery details and delivery fee have been
+                            confirmed.
+                        </p>
+
+                        <div class="payment-method">
+
+                            <h3>Available Payment Method</h3>
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="payment_method"
+                                    value="paystack"
+                                    checked
+                                >
+
+                                Paystack
+                            </label>
+
+                            <p>
+                                Your payment will be processed through
+                                Paystack's secure payment system.
+                            </p>
+
+                        </div>
+
+                        <div class="payment-notice">
+
+                            <p>
+                                Payment is not available until the business
+                                confirms your delivery fee.
+                            </p>
+
+                            <p>
+                                Do not send payment to a personal account
+                                outside the official checkout process.
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            id="place-order-button"
+                            disabled
+                        >
+                            Awaiting Delivery Fee Confirmation
+                        </button>
+
+                    </section>
+
+                </form>
+
+            </div>
+
+            <!-- Order Summary -->
+            <aside class="checkout-order-summary">
+
+                <h2>Your Order</h2>
+
+                <!-- JavaScript will display the selected products here. -->
+                <div id="checkout-cart-items">
+
+                    <p>
+                        Your selected honey products will appear here.
+                    </p>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>Honey Subtotal</span>
+
+                    <span id="checkout-subtotal">₦0</span>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>Delivery Fee</span>
+
+                    <span id="checkout-delivery-fee">
+                        Awaiting confirmation
+                    </span>
+
+                </div>
+
+                <div class="summary-row total-row">
+
+                    <strong>Total Payable</strong>
+
+                    <strong id="checkout-total">
+                        Awaiting confirmation
+                    </strong>
+
+                </div>
+
+                <p class="checkout-summary-note">
+                    The final total will include your honey subtotal and
+                    the delivery fee confirmed by the business.
+                </p>
+
+                <a href="cart.html" class="back-to-cart">
+                    Return to Cart
+                </a>
+
+            </aside>
+
+        </section>
+
+        <!-- Customer Support -->
+        <section class="checkout-support">
+
+            <h2>Need Help With Your Order?</h2>
+
+            <p>
+                Contact us if you have questions about your order
+                or delivery arrangements.
+            </p>
+
+            <p>
+                Phone:
+                <a href="tel:+2348055181850">08055181850</a>
+            </p>
+
+            <p>
+                Email:
+                <a href="mailto:ajoselateephat0@gmail.com">
+                    ajoselateephat0@gmail.com
+                </a>
+            </p>
+
+            <p>
+                <a
+                    href="https://wa.me/2348055181850"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Chat with us on WhatsApp
+                </a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+
+        <div class="footer-brand">
+
+            <a href="index.html">
+                <span class="brand-name">3W VENTURES HONEY</span>
+            </a>
+
+            <p>Nature's Liquid Gold.</p>
+
+            <p>Delivering honey across Lagos State.</p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Explore</h3>
+
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop Honey</a>
+            <a href="about.html">Our Story</a>
+            <a href="contact.html">Contact Us</a>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Customer Care</h3>
+
+            <a href="cart.html">Shopping Cart</a>
+            <a href="contact.html">Contact Support</a>
+            <a href="contact.html">Delivery Information</a>
+
+        </div>
+
+        <div class="footer-contact">
+
+            <h3>Contact Us</h3>
+
+            <p>
+                Phone:
+                <a href="tel:+2348055181850">08055181850</a>
+            </p>
+
+            <p>
+                Email:
+                <a href="mailto:ajoselateephat0@gmail.com">
+                    ajoselateephat0@gmail.com
+                </a>
+            </p>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                &copy; 2026 3W Ventures Honey. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+    <script src="java/java.js" defer></script>
+
+</body>
+</html>

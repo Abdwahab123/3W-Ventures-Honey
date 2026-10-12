@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact 3W Ventures Honey for product enquiries, orders, and delivery information across Lagos State.">
+    <title>Contact Us | 3W Ventures Honey</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <p>Delivering honey across Lagos State</p>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+
+        <div class="brand">
+            <a href="index.html" aria-label="3W Ventures Honey Homepage">
+                <span class="brand-name">3W VENTURES</span>
+                <span class="brand-subtitle">HONEY · NATURE'S LIQUID GOLD</span>
+            </a>
+        </div>
+
+        <nav class="main-navigation" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop Honey</a>
+            <a href="about.html">Our Story</a>
+            <a href="contact.html" aria-current="page">Contact</a>
+            <a href="cart.html" class="cart-link">
+                Cart <span class="cart-count">0</span>
+            </a>
+        </nav>
+
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Contact Hero -->
+        <section class="page-hero contact-hero">
+
+            <p class="eyebrow">WE'RE HERE TO HELP</p>
+
+            <h1>Let's Talk Honey.</h1>
+
+            <p>
+                Have a question about our honey, need help with an order,
+                or want to make an enquiry? We'd love to hear from you.
+            </p>
+
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+
+            <!-- Contact Details -->
+            <div class="contact-introduction">
+
+                <p class="eyebrow">GET IN TOUCH</p>
+
+                <h2>How Can We Help You?</h2>
+
+                <p>
+                    At 3W Ventures Honey, we want your shopping experience
+                    to be straightforward and convenient. Contact us for
+                    product information, order assistance, delivery
+                    enquiries, and business opportunities.
+                </p>
+
+                <!-- Phone -->
+                <div class="contact-detail">
+
+                    <h3>Call Us</h3>
+
+                    <p>
+                        Speak with us directly about your questions or orders.
+                    </p>
+
+                    <a href="tel:+2348055181850">
+                        08055181850
+                    </a>
+
+                </div>
+
+                <!-- Email -->
+                <div class="contact-detail">
+
+                    <h3>Email Us</h3>
+
+                    <p>
+                        Send us your questions or detailed enquiries by email.
+                    </p>
+
+                    <a href="mailto:ajoselateephat0@gmail.com">
+                        ajoselateephat0@gmail.com
+                    </a>
+
+                </div>
+
+                <!-- WhatsApp -->
+                <div class="contact-detail">
+
+                    <h3>Chat With Us on WhatsApp</h3>
+
+                    <p>
+                        Prefer messaging? Start a WhatsApp conversation
+                        with our team.
+                    </p>
+
+                    <a
+                        href="https://wa.me/2348055181850"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Message Us on WhatsApp
+                    </a>
+
+                </div>
+
+                <!-- Delivery -->
+                <div class="contact-detail">
+
+                    <h3>Delivery Information</h3>
+
+                    <p>
+                        We currently deliver within Lagos State, Nigeria.
+                        Your delivery address will be reviewed, and your
+                        delivery fee confirmed before payment.
+                    </p>
+
+                </div>
+
+                <!-- Business Enquiries -->
+                <div class="contact-detail">
+
+                    <h3>Bulk & Business Enquiries</h3>
+
+                    <p>
+                        Interested in ordering larger quantities of honey?
+                        Contact us to discuss your requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+
+                <p class="eyebrow">SEND AN ENQUIRY</p>
+
+                <h2>Send Us a Message</h2>
+
+                <p>
+                    Complete the form below with your details and message.
+                    Please provide accurate information so we can respond
+                    to your enquiry.
+                </p>
+
+                <form id="contact-form" action="#" method="post">
+
+                    <div class="form-group">
+
+                        <label for="customer-name">Full Name *</label>
+
+                        <input
+                            type="text"
+                            id="customer-name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="customer-email">Email Address *</label>
+
+                        <input
+                            type="email"
+                            id="customer-email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="customer-phone">Phone Number</label>
+
+                        <input
+                            type="tel"
+                            id="customer-phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="enquiry-type">Enquiry Type *</label>
+
+                        <select
+                            id="enquiry-type"
+                            name="enquiry_type"
+                            required
+                        >
+
+                            <option value="">Choose an enquiry type</option>
+                            <option value="product">Product Information</option>
+                            <option value="order">Order Assistance</option>
+                            <option value="payment">Payment Enquiry</option>
+                            <option value="delivery">Delivery Enquiry</option>
+                            <option value="bulk">Bulk Order</option>
+                            <option value="business">Business Enquiry</option>
+                            <option value="feedback">Feedback or Suggestion</option>
+                            <option value="other">Other</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="order-reference">
+                            Order Reference (Optional)
+                        </label>
+
+                        <input
+                            type="text"
+                            id="order-reference"
+                            name="order_reference"
+                            placeholder="Enter your order reference"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="customer-message">Your Message *</label>
+
+                        <textarea
+                            id="customer-message"
+                            name="message"
+                            rows="6"
+                            placeholder="How can we help you?"
+                            required
+                        ></textarea>
+
+                    </div>
+
+                    <p class="form-note">
+                        Please do not include your bank PIN, card PIN,
+                        passwords, or other sensitive payment information.
+                    </p>
+
+                    <button type="submit" class="submit-button">
+                        Send Message
+                    </button>
+
+                </form>
+
+                <p class="form-status" aria-live="polite"></p>
+
+                <!-- The contact form will be connected to a working
+                     submission service during the integration stage. -->
+
+            </div>
+
+        </section>
+
+        <!-- Delivery Section -->
+        <section class="contact-delivery-section">
+
+            <p class="eyebrow">FROM OUR HONEY TO YOUR HOME</p>
+
+            <h2>Planning Your Next Order?</h2>
+
+            <p>
+                Explore our available honey sizes, select the quantity
+                that suits your needs, and provide your delivery location
+                during checkout.
+            </p>
+
+            <p>
+                Delivery is available within Lagos State. Your delivery
+                fee must be confirmed before you proceed to payment.
+            </p>
+
+            <a href="shop.html" class="button">
+                Explore Our Honey
+            </a>
+
+        </section>
+
+        <!-- Frequently Asked Questions -->
+        <section class="contact-faq-section">
+
+            <p class="eyebrow">A LITTLE MORE INFORMATION</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+
+                <h3>What sizes of honey are available?</h3>
+
+                <p>
+                    Our planned size range starts at ⅛ litre and extends
+                    to 25 litres. Visit the shop page to explore the
+                    available options.
+                </p>
+
+            </div>
+
+            <div class="faq-item">
+
+                <h3>How much is delivery?</h3>
+
+                <p>
+                    Delivery fees depend on your delivery location within
+                    Lagos State. The fee will be confirmed before payment.
+                </p>
+
+            </div>
+
+            <div class="faq-item">
+
+                <h3>When will I pay for my order?</h3>
+
+                <p>
+                    Your honey subtotal and delivery fee will be presented
+                    before you proceed to payment.
+                </p>
+
+            </div>
+
+            <div class="faq-item">
+
+                <h3>Can I place a bulk order?</h3>
+
+                <p>
+                    Yes. Contact us by phone, email, or the enquiry form
+                    to discuss the quantity you require.
+                </p>
+
+            </div>
+
+            <div class="faq-item">
+
+                <h3>How can I contact 3W Ventures Honey?</h3>
+
+                <p>
+                    You can call us on
+                    <a href="tel:+2348055181850">08055181850</a>,
+                    email
+                    <a href="mailto:ajoselateephat0@gmail.com">
+                        ajoselateephat0@gmail.com
+                    </a>,
+                    or use the contact form on this page.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+
+        <div class="footer-brand">
+
+            <a href="index.html">
+                <span class="brand-name">3W VENTURES HONEY</span>
+            </a>
+
+            <p>Nature's Liquid Gold.</p>
+
+            <p>
+                Your destination for honey orders and product enquiries
+                across Lagos State.
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Explore</h3>
+
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop Honey</a>
+            <a href="about.html">Our Story</a>
+            <a href="contact.html">Contact Us</a>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Customer Care</h3>
+
+            <a href="contact.html">Product Enquiries</a>
+            <a href="contact.html">Order Support</a>
+            <a href="contact.html">Delivery Information</a>
+            <a href="cart.html">Shopping Cart</a>
+
+        </div>
+
+        <div class="footer-contact">
+
+            <h3>Contact Us</h3>
+
+            <p>
+                Phone:
+                <a href="tel:+2348055181850">08055181850</a>
+            </p>
+
+            <p>
+                Email:
+                <a href="mailto:ajoselateephat0@gmail.com">
+                    ajoselateephat0@gmail.com
+                </a>
+            </p>
+
+            <p>
+                <a
+                    href="https://wa.me/2348055181850"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Chat on WhatsApp
+                </a>
+            </p>
+
+            <p>Delivery area: Lagos State, Nigeria.</p>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                &copy; 2026 3W Ventures Honey. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+    <script src="java/java.js" defer></script>
+
+</body>
+</html>
