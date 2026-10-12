@@ -1,7 +1,7 @@
-/* ==========================================
+/* =========================================================
    3W VENTURES HONEY
    Shopping Cart & Website Functionality
-   ========================================== */
+   ========================================================= */
 
 "use strict";
 
@@ -9,6 +9,7 @@ const HoneyShop = (() => {
     const PRICE_PER_LITRE = 10000;
     const CART_KEY = "3w_honey_cart";
     const ORDER_KEY = "3w_honey_pending_order";
+    let initialized = false;
 
     const SIZES = [
         { label: "⅛ Litre", litres: 0.125 },
@@ -25,27 +26,55 @@ const HoneyShop = (() => {
             style: "currency",
             currency: "NGN",
             maximumFractionDigits: 0
-        }).format(amount);
+        }).format(Number(amount) || 0);
 
     const priceForSize = litres =>
-        Math.round(litres * PRICE_PER_LITRE);
+        Math.round(Number(litres) * PRICE_PER_LITRE);
 
     function getCart() {
         try {
-            const cart = JSON.parse(localStorage.getItem(CART_KEY));
-            return Array.isArray(cart) ? cart : [];
-        } catch {
+            const parsed = JSON.parse(
+                localStorage.getItem(CART_KEY) || "[]"
+            );
+
+            if (!Array.isArray(parsed)) return [];
+
+            return parsed
+                .filter(item =>
+                    item &&
+                    typeof item.id === "string" &&
+                    Number.isFinite(Number(item.litres)) &&
+                    Number(item.litres) > 0 &&
+                    Number.isInteger(Number(item.quantity)) &&
+                    Number(item.quantity) > 0
+                )
+                .map(item => ({
+                    ...item,
+                    litres: Number(item.litres),
+                    quantity: Number(item.quantity),
+                    price: priceForSize(Number(item.litres))
+                }));
+        } catch (error) {
+            console.warn("Unable to read the saved honey cart.", error);
             return [];
         }
     }
 
     function saveCart(cart) {
-        localStorage.setItem(CART_KEY, JSON.stringify(cart));
-        updateCartDisplay();
+        try {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            updateCartDisplay();
+        } catch (error) {
+            console.error("Unable to save the honey cart.", error);
+            showToast("Unable to save your cart. Please check your browser settings.");
+        }
     }
 
     function getCartCount() {
-        return getCart().reduce((total, item) => total + item.quantity, 0);
+        return getCart().reduce(
+            (total, item) => total + item.quantity,
+            0
+        );
     }
 
     function getSubtotal() {
@@ -72,11 +101,12 @@ const HoneyShop = (() => {
                 background: "#392619",
                 color: "#ffffff",
                 padding: "14px 22px",
-                borderRadius: "8px",
+                borderRadius: "10px",
                 zIndex: "99999",
                 maxWidth: "90%",
                 textAlign: "center",
-                boxShadow: "0 5px 20px rgba(0,0,0,.18)"
+                boxShadow: "0 5px 20px rgba(0,0,0,.18)",
+                fontFamily: "inherit"
             });
 
             document.body.appendChild(toast);
@@ -92,12 +122,19 @@ const HoneyShop = (() => {
         }, 2500);
     }
 
+    /* ADD TO CART */
+
     function addToCart(product) {
         const litres = Number(product.litres);
         const quantity = Number(product.quantity || 1);
 
-        if (!Number.isFinite(litres) || litres <= 0 ||
-            !Number.isInteger(quantity) || quantity < 1) {
+        if (
+            !Number.isFinite(litres) ||
+            litres <= 0 ||
+            !Number.isInteger(quantity) ||
+            quantity < 1 ||
+            quantity > 99
+        ) {
             showToast("Please select a valid honey size and quantity.");
             return;
         }
@@ -108,7 +145,10 @@ const HoneyShop = (() => {
         const existing = cart.find(item => item.id === id);
 
         if (existing) {
-            existing.quantity += quantity;
+            existing.quantity = Math.min(
+                999,
+                existing.quantity + quantity
+            );
         } else {
             cart.push({
                 id,
@@ -121,8 +161,13 @@ const HoneyShop = (() => {
         }
 
         saveCart(cart);
-        showToast("Honey added to your cart successfully!");
+
+        showToast(
+            `${product.size || `${litres} Litre`} added to your cart.`
+        );
     }
+
+    /* CHANGE QUANTITY INSIDE CART */
 
     function changeQuantity(id, change) {
         const cart = getCart();
@@ -130,16 +175,19 @@ const HoneyShop = (() => {
 
         if (!item) return;
 
-        item.quantity += change;
+        item.quantity += Number(change);
 
         if (item.quantity <= 0) {
-            const updatedCart = cart.filter(product => product.id !== id);
-            saveCart(updatedCart);
+            saveCart(cart.filter(product => product.id !== id));
             return;
         }
 
+        item.quantity = Math.min(999, item.quantity);
+
         saveCart(cart);
     }
+
+    /* REMOVE ITEM */
 
     function removeItem(id) {
         saveCart(getCart().filter(item => item.id !== id));
@@ -151,20 +199,101 @@ const HoneyShop = (() => {
         updateCartDisplay();
     }
 
+    /* PROTECT HTML OUTPUT */
+
+    function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, character => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[character]);
+    }
+
+    /* DISPLAY CART ITEMS */
+
+    function renderCart(container, cart) {
+        if (!cart.length) {
+            container.innerHTML = `
+                <div class="empty-cart-message">
+                    <h3>Your cart is waiting for some honey.</h3>
+                    <p>Choose your preferred size to get started.</p>
+                    <a class="button" href="shop.html">Shop Honey</a>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = cart.map(item => `
+            <article class="cart-item"
+                data-item-id="${escapeHTML(item.id)}">
+
+                <div class="cart-item-info">
+                    <h3>${escapeHTML(item.name)}</h3>
+                    <p>${escapeHTML(item.size)}</p>
+                    <p>${formatMoney(item.price)} each</p>
+                </div>
+
+                <div class="cart-item-quantity">
+                    <button
+                        type="button"
+                        data-quantity-change="-1"
+                        data-item-id="${escapeHTML(item.id)}"
+                        aria-label="Decrease quantity">−</button>
+
+                    <span>${item.quantity}</span>
+
+                    <button
+                        type="button"
+                        data-quantity-change="1"
+                        data-item-id="${escapeHTML(item.id)}"
+                        aria-label="Increase quantity">+</button>
+                </div>
+
+                <strong class="cart-item-total">
+                    ${formatMoney(item.price * item.quantity)}
+                </strong>
+
+                <button
+                    type="button"
+                    class="remove-cart-item"
+                    data-remove-item="${escapeHTML(item.id)}">
+                    Remove
+                </button>
+
+            </article>
+        `).join("");
+    }
+
+    /* UPDATE CART COUNT AND TOTALS */
+
     function updateCartDisplay() {
         const cart = getCart();
-        const count = getCartCount();
-        const subtotal = getSubtotal();
+
+        const count = cart.reduce(
+            (sum, item) => sum + item.quantity,
+            0
+        );
+
+        const subtotal = cart.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+        );
 
         document.querySelectorAll("[data-cart-count]").forEach(element => {
             element.textContent = count;
         });
 
-        document.querySelectorAll("[data-cart-subtotal]").forEach(element => {
+        document.querySelectorAll(
+            "[data-cart-subtotal], [data-checkout-subtotal]"
+        ).forEach(element => {
             element.textContent = formatMoney(subtotal);
         });
 
-        document.querySelectorAll("[data-cart-total]").forEach(element => {
+        document.querySelectorAll(
+            "[data-cart-total], [data-checkout-total]"
+        ).forEach(element => {
             element.textContent = formatMoney(subtotal);
         });
 
@@ -185,65 +314,44 @@ const HoneyShop = (() => {
         });
     }
 
-    function renderCart(container, cart) {
-        if (cart.length === 0) {
-            container.innerHTML = `
-                <div class="empty-cart-message">
-                    <h3>Your cart is waiting for some honey.</h3>
-                    <p>Choose your preferred size to get started.</p>
-                    <a href="shop.html">Shop Honey</a>
-                </div>
-            `;
-            return;
-        }
+    /* READ PRODUCT DETAILS */
 
-        container.innerHTML = cart.map(item => `
-            <article class="cart-item" data-item-id="${escapeHTML(item.id)}">
-                <div class="cart-item-info">
-                    <h3>${escapeHTML(item.name)}</h3>
-                    <p>${escapeHTML(item.size)}</p>
-                    <p>${formatMoney(item.price)} each</p>
-                </div>
+    function readProductButton(button) {
+        const card = button.closest("[data-product-card]");
 
-                <div class="cart-item-quantity">
-                    <button type="button"
-                        data-quantity-change="-1"
-                        data-item-id="${escapeHTML(item.id)}"
-                        aria-label="Decrease quantity">−</button>
+        const litres = Number(
+            button.dataset.litres ||
+            (card && card.dataset.litres)
+        );
 
-                    <span>${item.quantity}</span>
+        const quantityInput = card
+            ? card.querySelector("[data-product-quantity]")
+            : null;
 
-                    <button type="button"
-                        data-quantity-change="1"
-                        data-item-id="${escapeHTML(item.id)}"
-                        aria-label="Increase quantity">+</button>
-                </div>
+        const quantity = quantityInput
+            ? Number(quantityInput.value || 1)
+            : 1;
 
-                <strong>${formatMoney(item.price * item.quantity)}</strong>
+        const size =
+            button.dataset.productSize ||
+            (card && card.dataset.productSize) ||
+            (Number.isFinite(litres) ? `${litres} Litre` : "");
 
-                <button type="button"
-                    data-remove-item="${escapeHTML(item.id)}"
-                    aria-label="Remove ${escapeHTML(item.name)}">
-                    Remove
-                </button>
-            </article>
-        `).join("");
+        return {
+            id: button.dataset.productId || `${litres}-litre`,
+            name: button.dataset.productName || "3W Ventures Honey",
+            size,
+            litres,
+            quantity
+        };
     }
 
-    function escapeHTML(value) {
-        return String(value).replace(/[&<>"']/g, character => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        })[character]);
-    }
+    /* CHECKOUT */
 
     function prepareCheckout() {
         const cart = getCart();
 
-        if (cart.length === 0) {
+        if (!cart.length) {
             showToast("Your cart is empty. Please add honey first.");
             return;
         }
@@ -265,167 +373,187 @@ const HoneyShop = (() => {
 
     function getPendingOrder() {
         try {
-            return JSON.parse(localStorage.getItem(ORDER_KEY));
+            return JSON.parse(
+                localStorage.getItem(ORDER_KEY) || "null"
+            );
         } catch {
             return null;
         }
     }
 
-    function initialiseProductButtons() {
-    document.querySelectorAll("[data-product-id]").forEach(button => {
-        if (button.dataset.honeyListener === "true") return;
-
-        button.dataset.honeyListener = "true";
-
-        button.addEventListener("click", () => {
-            const card = button.closest("[data-product-card]");
-
-            // Read the size from the button first, then the product card.
-            let litres = Number(button.dataset.litres);
-
-            if (!litres && card) {
-                litres = Number(card.dataset.litres);
-            }
-
-            // Support sizes written as fractions.
-            const sizeText = (
-                button.dataset.productSize ||
-                (card && card.dataset.productSize) ||
-                (card && card.innerText) ||
-                ""
-            );
-
-            if (!Number.isFinite(litres) || litres <= 0) {
-                if (/⅛|1\/8/.test(sizeText)) {
-                    litres = 0.125;
-                } else if (/¼|1\/4/.test(sizeText)) {
-                    litres = 0.25;
-                } else if (/½|1\/2/.test(sizeText)) {
-                    litres = 0.5;
-                } else {
-                    const match = sizeText.match(
-                        /(\d+(?:\.\d+)?)\s*(?:litres?|liters?|L)\b/i
-                    );
-
-                    if (match) {
-                        litres = Number(match[1]);
-                    }
-                }
-            }
-
-            const quantityInput = card
-                ? card.querySelector("[data-product-quantity]")
-                : null;
-
-            const quantity = quantityInput
-                ? Number(quantityInput.value || 1)
-                : 1;
-
-            if (!Number.isFinite(litres) || litres <= 0) {
-                console.error("Could not identify honey size:", button);
-                showToast("Please check the product size in your HTML.");
-                return;
-            }
-
-            addToCart({
-                id: button.dataset.productId || `${litres}-litre`,
-                name: button.dataset.productName || "3W Ventures Honey",
-                size: button.dataset.productSize || sizeText.trim().split("\n")[0],
-                litres: litres,
-                quantity: quantity
-            });
-        });
-    });
-}
-    function initialiseQuantityButtons() {
-        document.addEventListener("click", event => {
-            const quantityButton = event.target.closest("[data-quantity-change]");
-
-            if (quantityButton) {
-                const id = quantityButton.dataset.itemId;
-                const change = Number(quantityButton.dataset.quantityChange);
-
-                if (id && Number.isFinite(change)) {
-                    changeQuantity(id, change);
-                }
-                return;
-            }
-
-            const removeButton = event.target.closest("[data-remove-item]");
-
-            if (removeButton) {
-                removeItem(removeButton.dataset.removeItem);
-            }
-        });
-
-        document.querySelectorAll("[data-product-card]").forEach(card => {
-            const input = card.querySelector("[data-product-quantity]");
-            const minus = card.querySelector("[data-product-minus]");
-            const plus = card.querySelector("[data-product-plus]");
-
-            if (!input) return;
-
-            input.min = "1";
-
-            if (!input.value || Number(input.value) < 1) {
-                input.value = "1";
-            }
-
-            minus?.addEventListener("click", () => {
-                input.value = Math.max(1, Number(input.value || 1) - 1);
-            });
-
-            plus?.addEventListener("click", () => {
-                input.value = Math.max(1, Number(input.value || 1) + 1);
-            });
-        });
-    }
-
     function initialiseCheckout() {
         document.querySelectorAll("[data-checkout-button]").forEach(button => {
-            button.addEventListener("click", event => {
-                event.preventDefault();
-                prepareCheckout();
-            });
+            button.disabled = getCart().length === 0;
         });
+
+        const order = getPendingOrder();
+
+        if (!order) return;
 
         const subtotal = document.querySelector("[data-checkout-subtotal]");
         const total = document.querySelector("[data-checkout-total]");
         const deliveryFee = document.querySelector("[data-delivery-fee]");
 
-        const order = getPendingOrder();
+        if (subtotal) {
+            subtotal.textContent = formatMoney(order.subtotal);
+        }
 
-        if (order) {
-            if (subtotal) subtotal.textContent = formatMoney(order.subtotal);
+        if (deliveryFee) {
+            deliveryFee.value = order.deliveryFeeConfirmed
+                ? formatMoney(order.deliveryFee)
+                : "Awaiting confirmation";
+        }
 
-            // Delivery fee must be confirmed by the business.
-            if (deliveryFee) {
-                deliveryFee.value = order.deliveryFeeConfirmed
-                    ? formatMoney(order.deliveryFee)
-                    : "Awaiting confirmation";
-            }
-
-            if (total) {
-                total.textContent = formatMoney(
-                    order.subtotal +
-                    (order.deliveryFeeConfirmed ? order.deliveryFee : 0)
-                );
-            }
+        if (total) {
+            total.textContent = formatMoney(
+                Number(order.subtotal || 0) +
+                (
+                    order.deliveryFeeConfirmed
+                        ? Number(order.deliveryFee || 0)
+                        : 0
+                )
+            );
         }
     }
 
-    function getSizes() {
-        return SIZES.map(size => ({
-            ...size,
-            price: priceForSize(size.litres)
-        }));
+    /* ALL CLICK EVENTS ARE HANDLED ONCE */
+
+    function initialiseEvents() {
+        if (initialized) return;
+
+        initialized = true;
+
+        document.addEventListener("click", event => {
+
+            /* ADD TO CART */
+            const addButton = event.target.closest(
+                "[data-product-id]"
+            );
+
+            if (addButton) {
+                event.preventDefault();
+                addToCart(readProductButton(addButton));
+                return;
+            }
+
+            /* PRODUCT QUANTITY BUTTONS */
+            const minusButton = event.target.closest(
+                "[data-product-minus]"
+            );
+
+            const plusButton = event.target.closest(
+                "[data-product-plus]"
+            );
+
+            if (minusButton || plusButton) {
+                event.preventDefault();
+
+                const button = minusButton || plusButton;
+                const card = button.closest("[data-product-card]");
+
+                const input = card
+                    ? card.querySelector("[data-product-quantity]")
+                    : null;
+
+                if (!input) return;
+
+                const current = Number(input.value || 1);
+
+                const next = plusButton
+                    ? current + 1
+                    : current - 1;
+
+                input.value = Math.max(
+                    1,
+                    Math.min(99, Number.isFinite(next) ? next : 1)
+                );
+
+                input.dispatchEvent(
+                    new Event("change", { bubbles: true })
+                );
+
+                return;
+            }
+
+            /* QUANTITY BUTTONS ON CART PAGE */
+            const cartQuantityButton = event.target.closest(
+                "[data-quantity-change]"
+            );
+
+            if (cartQuantityButton) {
+                event.preventDefault();
+
+                const id = cartQuantityButton.dataset.itemId;
+                const change = Number(
+                    cartQuantityButton.dataset.quantityChange
+                );
+
+                if (id && Number.isFinite(change)) {
+                    changeQuantity(id, change);
+                }
+
+                return;
+            }
+
+            /* REMOVE FROM CART */
+            const removeButton = event.target.closest(
+                "[data-remove-item]"
+            );
+
+            if (removeButton) {
+                event.preventDefault();
+                removeItem(removeButton.dataset.removeItem);
+                return;
+            }
+
+            /* PROCEED TO CHECKOUT */
+            const checkoutButton = event.target.closest(
+                "[data-checkout-button]"
+            );
+
+            if (checkoutButton) {
+                event.preventDefault();
+                prepareCheckout();
+            }
+        });
+
+        /* VALIDATE MANUALLY ENTERED QUANTITY */
+        document.addEventListener("change", event => {
+            const input = event.target.closest(
+                "[data-product-quantity]"
+            );
+
+            if (!input) return;
+
+            const quantity = Number(input.value);
+
+            input.value = String(
+                Number.isInteger(quantity)
+                    ? Math.max(1, Math.min(99, quantity))
+                    : 1
+            );
+        });
+
+        /* UPDATE IF ANOTHER TAB CHANGES THE CART */
+        window.addEventListener("storage", event => {
+            if (event.key === CART_KEY) {
+                updateCartDisplay();
+            }
+        });
     }
 
+    /* START WEBSITE FUNCTIONALITY */
+
     function init() {
-        initialiseProductButtons();
-        initialiseQuantityButtons();
-        initialiseCheckout();
+        initialiseEvents();
         updateCartDisplay();
+        initialiseCheckout();
+
+        const year = document.querySelector("#copyright-year");
+
+        if (year) {
+            year.textContent = new Date().getFullYear();
+        }
     }
 
     return {
@@ -437,7 +565,10 @@ const HoneyShop = (() => {
         getCart,
         getCartCount,
         getSubtotal,
-        getSizes,
+        getSizes: () => SIZES.map(size => ({
+            ...size,
+            price: priceForSize(size.litres)
+        })),
         formatMoney,
         prepareCheckout,
         getPendingOrder,

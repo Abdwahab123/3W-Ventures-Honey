@@ -1677,3 +1677,92 @@ footer a:hover,
         transition-duration: 0.01ms !important;
     }
 }
+/* =========================================
+   3W VENTURES HONEY — PRODUCT QUANTITY FIX
+========================================= */
+
+.product-card .product-quantity {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin: 18px 0 !important;
+}
+
+.product-card .product-quantity button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 42px !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    border: 1px solid #c5a66a !important;
+    border-radius: 50% !important;
+    background: #f6ecd7 !important;
+    color: #49301d !important;
+    font-size: 24px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease, color 0.2s ease !important;
+}
+
+.product-card .product-quantity button:hover {
+    background: #49301d !important;
+    color: #ffffff !important;
+}
+
+.product-card .product-quantity input {
+    flex: 1 1 auto !important;
+    width: 60px !important;
+    min-width: 0 !important;
+    max-width: 100px !important;
+    height: 42px !important;
+    padding: 8px !important;
+    border: 1px solid #e1d3b9 !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    color: #392819 !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    box-sizing: border-box !important;
+}
+
+.product-card .product-content > button[data-product-id] {
+    display: block !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    margin-top: 10px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: #49301d !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+
+.product-card .product-content > button[data-product-id]:hover {
+    background: #a77b35 !important;
+}
+
+/* Mobile layout */
+@media (max-width: 480px) {
+    .product-card .product-quantity {
+        gap: 8px !important;
+    }
+
+    .product-card .product-quantity button {
+        flex-basis: 38px !important;
+        width: 38px !important;
+        min-width: 38px !important;
+        height: 38px !important;
+    }
+
+    .product-card .product-quantity input {
+        height: 38px !important;
+    }
+}
