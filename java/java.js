@@ -9,17 +9,25 @@ const HoneyShop = (() => {
     const PRICE_PER_LITRE = 10000;
     const CART_KEY = "3w_honey_cart";
     const ORDER_KEY = "3w_honey_pending_order";
+
     let initialized = false;
+
+    /* HONEY SIZES */
 
     const SIZES = [
         { label: "⅛ Litre", litres: 0.125 },
         { label: "¼ Litre", litres: 0.25 },
         { label: "½ Litre", litres: 0.5 },
-        ...Array.from({ length: 25 }, (_, i) => ({
-            label: `${i + 1} ${i === 0 ? "Litre" : "Litres"}`,
-            litres: i + 1
+
+        ...Array.from({ length: 25 }, (_, index) => ({
+            label: `${index + 1} ${
+                index === 0 ? "Litre" : "Litres"
+            }`,
+            litres: index + 1
         }))
     ];
+
+    /* PRICE FORMATTING */
 
     const formatMoney = amount =>
         new Intl.NumberFormat("en-NG", {
@@ -31,13 +39,17 @@ const HoneyShop = (() => {
     const priceForSize = litres =>
         Math.round(Number(litres) * PRICE_PER_LITRE);
 
+    /* GET SAVED CART */
+
     function getCart() {
         try {
             const parsed = JSON.parse(
                 localStorage.getItem(CART_KEY) || "[]"
             );
 
-            if (!Array.isArray(parsed)) return [];
+            if (!Array.isArray(parsed)) {
+                return [];
+            }
 
             return parsed
                 .filter(item =>
@@ -52,23 +64,43 @@ const HoneyShop = (() => {
                     ...item,
                     litres: Number(item.litres),
                     quantity: Number(item.quantity),
-                    price: priceForSize(Number(item.litres))
+                    price: priceForSize(item.litres)
                 }));
+
         } catch (error) {
-            console.warn("Unable to read the saved honey cart.", error);
+            console.warn(
+                "Unable to read the saved honey cart.",
+                error
+            );
+
             return [];
         }
     }
 
+    /* SAVE CART */
+
     function saveCart(cart) {
         try {
-            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            localStorage.setItem(
+                CART_KEY,
+                JSON.stringify(cart)
+            );
+
             updateCartDisplay();
+
         } catch (error) {
-            console.error("Unable to save the honey cart.", error);
-            showToast("Unable to save your cart. Please check your browser settings.");
+            console.error(
+                "Unable to save the honey cart.",
+                error
+            );
+
+            showToast(
+                "Unable to save your cart. Check your browser storage."
+            );
         }
     }
+
+    /* CART COUNT */
 
     function getCartCount() {
         return getCart().reduce(
@@ -77,19 +109,26 @@ const HoneyShop = (() => {
         );
     }
 
+    /* CART SUBTOTAL */
+
     function getSubtotal() {
         return getCart().reduce(
-            (total, item) => total + item.price * item.quantity,
+            (total, item) =>
+                total + item.price * item.quantity,
             0
         );
     }
+
+    /* TOAST NOTIFICATIONS */
 
     function showToast(message) {
         let toast = document.querySelector("#honey-toast");
 
         if (!toast) {
             toast = document.createElement("div");
+
             toast.id = "honey-toast";
+
             toast.setAttribute("role", "status");
             toast.setAttribute("aria-live", "polite");
 
@@ -122,7 +161,7 @@ const HoneyShop = (() => {
         }, 2500);
     }
 
-    /* ADD TO CART */
+    /* ADD PRODUCT TO CART */
 
     function addToCart(product) {
         const litres = Number(product.litres);
@@ -135,20 +174,29 @@ const HoneyShop = (() => {
             quantity < 1 ||
             quantity > 99
         ) {
-            showToast("Please select a valid honey size and quantity.");
-            return;
+            showToast(
+                "Please select a valid honey size and quantity."
+            );
+
+            return false;
         }
 
         const cart = getCart();
-        const id = String(product.id || `${litres}-litre`);
 
-        const existing = cart.find(item => item.id === id);
+        const id = String(
+            product.id || `${litres}-litre`
+        );
+
+        const existing = cart.find(
+            item => item.id === id
+        );
 
         if (existing) {
             existing.quantity = Math.min(
-                999,
+                99,
                 existing.quantity + quantity
             );
+
         } else {
             cart.push({
                 id,
@@ -165,41 +213,96 @@ const HoneyShop = (() => {
         showToast(
             `${product.size || `${litres} Litre`} added to your cart.`
         );
+
+        return true;
     }
 
-    /* CHANGE QUANTITY INSIDE CART */
+    /* SET A PRODUCT QUANTITY DIRECTLY */
 
-    function changeQuantity(id, change) {
+    function setProductQuantity(id, quantity) {
         const cart = getCart();
-        const item = cart.find(product => product.id === id);
 
-        if (!item) return;
+        const item = cart.find(
+            product => product.id === String(id)
+        );
 
-        item.quantity += Number(change);
-
-        if (item.quantity <= 0) {
-            saveCart(cart.filter(product => product.id !== id));
+        if (!item) {
             return;
         }
 
-        item.quantity = Math.min(999, item.quantity);
+        const parsedQuantity = Number(quantity);
+
+        if (
+            !Number.isInteger(parsedQuantity) ||
+            parsedQuantity < 1
+        ) {
+            return;
+        }
+
+        item.quantity = Math.min(99, parsedQuantity);
 
         saveCart(cart);
     }
 
-    /* REMOVE ITEM */
+    /* CHANGE QUANTITY ON CART PAGE */
+
+    function changeQuantity(id, change) {
+        const cart = getCart();
+
+        const item = cart.find(
+            product => product.id === String(id)
+        );
+
+        if (!item) {
+            return;
+        }
+
+        const nextQuantity =
+            item.quantity + Number(change);
+
+        if (nextQuantity <= 0) {
+            saveCart(
+                cart.filter(product => product.id !== String(id))
+            );
+
+            showToast("Item removed from your cart.");
+
+            return;
+        }
+
+        item.quantity = Math.min(99, nextQuantity);
+
+        saveCart(cart);
+    }
+
+    /* REMOVE PRODUCT */
 
     function removeItem(id) {
-        saveCart(getCart().filter(item => item.id !== id));
+        const cart = getCart().filter(
+            item => item.id !== String(id)
+        );
+
+        saveCart(cart);
+
         showToast("Item removed from your cart.");
     }
 
+    /* CLEAR CART */
+
     function clearCart() {
-        localStorage.removeItem(CART_KEY);
-        updateCartDisplay();
+        try {
+            localStorage.removeItem(CART_KEY);
+
+            updateCartDisplay();
+
+            showToast("Your cart has been cleared.");
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    /* PROTECT HTML OUTPUT */
+    /* ESCAPE HTML */
 
     function escapeHTML(value) {
         return String(value).replace(/[&<>"']/g, character => ({
@@ -218,29 +321,46 @@ const HoneyShop = (() => {
             container.innerHTML = `
                 <div class="empty-cart-message">
                     <h3>Your cart is waiting for some honey.</h3>
-                    <p>Choose your preferred size to get started.</p>
-                    <a class="button" href="shop.html">Shop Honey</a>
+
+                    <p>
+                        Choose your preferred honey size to get started.
+                    </p>
+
+                    <a class="button" href="shop.html">
+                        Shop Honey
+                    </a>
                 </div>
             `;
+
             return;
         }
 
         container.innerHTML = cart.map(item => `
-            <article class="cart-item"
-                data-item-id="${escapeHTML(item.id)}">
+            <article
+                class="cart-item"
+                data-item-id="${escapeHTML(item.id)}"
+            >
 
                 <div class="cart-item-info">
                     <h3>${escapeHTML(item.name)}</h3>
+
                     <p>${escapeHTML(item.size)}</p>
-                    <p>${formatMoney(item.price)} each</p>
+
+                    <p>
+                        ${formatMoney(item.price)} each
+                    </p>
                 </div>
 
                 <div class="cart-item-quantity">
+
                     <button
                         type="button"
                         data-quantity-change="-1"
                         data-item-id="${escapeHTML(item.id)}"
-                        aria-label="Decrease quantity">−</button>
+                        aria-label="Decrease quantity"
+                    >
+                        −
+                    </button>
 
                     <span>${item.quantity}</span>
 
@@ -248,7 +368,11 @@ const HoneyShop = (() => {
                         type="button"
                         data-quantity-change="1"
                         data-item-id="${escapeHTML(item.id)}"
-                        aria-label="Increase quantity">+</button>
+                        aria-label="Increase quantity"
+                    >
+                        +
+                    </button>
+
                 </div>
 
                 <strong class="cart-item-total">
@@ -258,7 +382,8 @@ const HoneyShop = (() => {
                 <button
                     type="button"
                     class="remove-cart-item"
-                    data-remove-item="${escapeHTML(item.id)}">
+                    data-remove-item="${escapeHTML(item.id)}"
+                >
                     Remove
                 </button>
 
@@ -266,24 +391,163 @@ const HoneyShop = (() => {
         `).join("");
     }
 
-    /* UPDATE CART COUNT AND TOTALS */
+    /* SYNCHRONISE PRODUCT CARDS WITH CART */
+
+    function syncProductCards(cart) {
+        document.querySelectorAll(
+            "[data-product-card]"
+        ).forEach(card => {
+            const addButton = card.querySelector(
+                "[data-add-to-cart], button[data-product-id]"
+            );
+
+            if (!addButton) {
+                return;
+            }
+
+            const id = String(
+                addButton.dataset.productId ||
+                `${Number(addButton.dataset.litres || card.dataset.litres)}-litre`
+            );
+
+            const item = cart.find(
+                product => product.id === id
+            );
+
+            const quantityInput = card.querySelector(
+                "[data-product-quantity]"
+            );
+
+            const quantityWrap = card.querySelector(
+                "[data-quantity-wrap], .product-quantity"
+            );
+
+            if (item) {
+                if (quantityInput) {
+                    quantityInput.value = item.quantity;
+                }
+
+                addButton.hidden = true;
+
+                if (quantityWrap) {
+                    quantityWrap.hidden = false;
+                }
+
+            } else {
+                if (quantityInput) {
+                    quantityInput.value = 1;
+                }
+
+                addButton.hidden = false;
+
+                if (quantityWrap) {
+                    quantityWrap.hidden = true;
+                }
+            }
+        });
+    }
+
+    /* SHOP CART SUMMARY BAR */
+
+    function createShopCartBar() {
+        const productCards = document.querySelector(
+            "[data-product-card]"
+        );
+
+        if (!productCards) {
+            return;
+        }
+
+        if (document.querySelector("[data-shop-cart-bar]")) {
+            return;
+        }
+
+        const bar = document.createElement("div");
+
+        bar.className = "shop-cart-bar";
+        bar.setAttribute("data-shop-cart-bar", "");
+        bar.setAttribute("role", "region");
+        bar.setAttribute("aria-label", "Shopping cart summary");
+        bar.hidden = true;
+
+        bar.innerHTML = `
+            <div>
+                <span>
+                    <span data-shop-cart-count>0</span>
+                    item(s) in your cart
+                </span>
+
+                <strong data-shop-cart-total>
+                    ${formatMoney(0)}
+                </strong>
+            </div>
+
+            <a href="cart.html">
+                View Cart →
+            </a>
+        `;
+
+        document.body.appendChild(bar);
+    }
+
+    function updateShopCartBar(cart, subtotal) {
+        const bar = document.querySelector(
+            "[data-shop-cart-bar]"
+        );
+
+        if (!bar) {
+            return;
+        }
+
+        const count = cart.reduce(
+            (total, item) => total + item.quantity,
+            0
+        );
+
+        bar.hidden = count === 0;
+
+        const countElement = bar.querySelector(
+            "[data-shop-cart-count]"
+        );
+
+        const totalElement = bar.querySelector(
+            "[data-shop-cart-total]"
+        );
+
+        if (countElement) {
+            countElement.textContent = count;
+        }
+
+        if (totalElement) {
+            totalElement.textContent = formatMoney(subtotal);
+        }
+    }
+
+    /* UPDATE CART DISPLAY EVERYWHERE */
 
     function updateCartDisplay() {
         const cart = getCart();
 
         const count = cart.reduce(
-            (sum, item) => sum + item.quantity,
+            (total, item) => total + item.quantity,
             0
         );
 
         const subtotal = cart.reduce(
-            (sum, item) => sum + item.price * item.quantity,
+            (total, item) =>
+                total + item.price * item.quantity,
             0
         );
 
-        document.querySelectorAll("[data-cart-count]").forEach(element => {
+        /* HEADER CART COUNT */
+
+        document.querySelectorAll(
+            "[data-cart-count]"
+        ).forEach(element => {
             element.textContent = count;
         });
+
+        /* SUBTOTAL */
 
         document.querySelectorAll(
             "[data-cart-subtotal], [data-checkout-subtotal]"
@@ -291,33 +555,61 @@ const HoneyShop = (() => {
             element.textContent = formatMoney(subtotal);
         });
 
+        /* TOTAL */
+
         document.querySelectorAll(
             "[data-cart-total], [data-checkout-total]"
         ).forEach(element => {
             element.textContent = formatMoney(subtotal);
         });
 
-        document.querySelectorAll("[data-cart-items]").forEach(container => {
+        /* CART ITEMS */
+
+        document.querySelectorAll(
+            "[data-cart-items]"
+        ).forEach(container => {
             renderCart(container, cart);
         });
 
-        document.querySelectorAll("[data-cart-empty]").forEach(element => {
+        /* EMPTY CART MESSAGE */
+
+        document.querySelectorAll(
+            "[data-cart-empty]"
+        ).forEach(element => {
             element.hidden = cart.length > 0;
         });
 
-        document.querySelectorAll("[data-cart-filled]").forEach(element => {
+        /* CART CONTENT */
+
+        document.querySelectorAll(
+            "[data-cart-filled]"
+        ).forEach(element => {
             element.hidden = cart.length === 0;
         });
 
-        document.querySelectorAll("[data-checkout-button]").forEach(button => {
+        /* CHECKOUT BUTTON */
+
+        document.querySelectorAll(
+            "[data-checkout-button]"
+        ).forEach(button => {
             button.disabled = cart.length === 0;
         });
+
+        /* PRODUCT CARD CONTROLS */
+
+        syncProductCards(cart);
+
+        /* SHOP CART BAR */
+
+        updateShopCartBar(cart, subtotal);
     }
 
     /* READ PRODUCT DETAILS */
 
     function readProductButton(button) {
-        const card = button.closest("[data-product-card]");
+        const card = button.closest(
+            "[data-product-card]"
+        );
 
         const litres = Number(
             button.dataset.litres ||
@@ -338,8 +630,13 @@ const HoneyShop = (() => {
             (Number.isFinite(litres) ? `${litres} Litre` : "");
 
         return {
-            id: button.dataset.productId || `${litres}-litre`,
-            name: button.dataset.productName || "3W Ventures Honey",
+            id: button.dataset.productId ||
+                `${litres}-litre`,
+
+            name: button.dataset.productName ||
+                (card && card.dataset.productName) ||
+                "3W Ventures Honey",
+
             size,
             litres,
             quantity
@@ -352,7 +649,10 @@ const HoneyShop = (() => {
         const cart = getCart();
 
         if (!cart.length) {
-            showToast("Your cart is empty. Please add honey first.");
+            showToast(
+                "Your cart is empty. Please add honey first."
+            );
+
             return;
         }
 
@@ -360,83 +660,312 @@ const HoneyShop = (() => {
             items: cart,
             subtotal: getSubtotal(),
             currency: "NGN",
+
+            /* Delivery fee must be confirmed separately. */
             deliveryFee: null,
             deliveryFeeConfirmed: false,
+
             paymentStatus: "pending",
             createdAt: new Date().toISOString()
         };
 
-        localStorage.setItem(ORDER_KEY, JSON.stringify(order));
+        try {
+            localStorage.setItem(
+                ORDER_KEY,
+                JSON.stringify(order)
+            );
 
-        window.location.href = "checkout.html";
+            window.location.href = "checkout.html";
+
+        } catch (error) {
+            console.error(
+                "Unable to prepare checkout.",
+                error
+            );
+
+            showToast(
+                "Unable to continue to checkout. Please try again."
+            );
+        }
     }
+
+    /* GET PENDING ORDER */
 
     function getPendingOrder() {
         try {
             return JSON.parse(
                 localStorage.getItem(ORDER_KEY) || "null"
             );
+
         } catch {
             return null;
         }
     }
 
+    /* INITIALISE CHECKOUT DISPLAY */
+
     function initialiseCheckout() {
-        document.querySelectorAll("[data-checkout-button]").forEach(button => {
+        document.querySelectorAll(
+            "[data-checkout-button]"
+        ).forEach(button => {
             button.disabled = getCart().length === 0;
         });
 
         const order = getPendingOrder();
 
-        if (!order) return;
+        if (!order) {
+            return;
+        }
 
-        const subtotal = document.querySelector("[data-checkout-subtotal]");
-        const total = document.querySelector("[data-checkout-total]");
-        const deliveryFee = document.querySelector("[data-delivery-fee]");
+        const subtotal = document.querySelector(
+            "[data-checkout-subtotal]"
+        );
+
+        const total = document.querySelector(
+            "[data-checkout-total]"
+        );
+
+        const deliveryFee = document.querySelector(
+            "[data-delivery-fee]"
+        );
 
         if (subtotal) {
-            subtotal.textContent = formatMoney(order.subtotal);
+            subtotal.textContent = formatMoney(
+                order.subtotal
+            );
         }
 
         if (deliveryFee) {
-            deliveryFee.value = order.deliveryFeeConfirmed
+            const feeText = order.deliveryFeeConfirmed
                 ? formatMoney(order.deliveryFee)
                 : "Awaiting confirmation";
+
+            if ("value" in deliveryFee) {
+                deliveryFee.value = feeText;
+            } else {
+                deliveryFee.textContent = feeText;
+            }
         }
 
         if (total) {
+            const confirmedFee =
+                order.deliveryFeeConfirmed
+                    ? Number(order.deliveryFee || 0)
+                    : 0;
+
             total.textContent = formatMoney(
-                Number(order.subtotal || 0) +
-                (
-                    order.deliveryFeeConfirmed
-                        ? Number(order.deliveryFee || 0)
-                        : 0
-                )
+                Number(order.subtotal || 0) + confirmedFee
             );
         }
     }
 
-    /* ALL CLICK EVENTS ARE HANDLED ONCE */
+    /* MOBILE NAVIGATION */
+
+    function initialiseMobileNavigation() {
+        const nav = document.querySelector(".main-nav");
+
+        if (!nav) {
+            return;
+        }
+
+        const headerContainer = nav.parentElement;
+
+        if (!headerContainer) {
+            return;
+        }
+
+        let toggle = headerContainer.querySelector(
+            ".mobile-nav-toggle"
+        );
+
+        /* Create the menu button if it doesn't exist. */
+
+        if (!toggle) {
+            toggle = document.createElement("button");
+
+            toggle.type = "button";
+            toggle.className = "mobile-nav-toggle";
+
+            toggle.innerHTML = `
+                <span aria-hidden="true">☰</span>
+                <span>Menu</span>
+            `;
+
+            toggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+
+            toggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            Object.assign(toggle.style, {
+                display: "none",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                padding: "10px 14px",
+                border: "1px solid #d4af37",
+                borderRadius: "8px",
+                background: "#ffffff",
+                color: "#392619",
+                font: "inherit",
+                fontWeight: "600",
+                cursor: "pointer"
+            });
+
+            nav.parentElement.insertBefore(toggle, nav);
+        }
+
+        if (!nav.id) {
+            nav.id = "main-navigation";
+        }
+
+        toggle.setAttribute("aria-controls", nav.id);
+
+        /* Add responsive navigation styles. */
+
+        if (!document.querySelector("#honey-mobile-nav-styles")) {
+            const style = document.createElement("style");
+
+            style.id = "honey-mobile-nav-styles";
+
+            style.textContent = `
+                @media (max-width: 768px) {
+                    .mobile-nav-toggle {
+                        display: inline-flex !important;
+                    }
+
+                    .site-header > .container {
+                        position: relative;
+                    }
+
+                    .main-nav {
+                        display: none;
+                        width: 100%;
+                    }
+
+                    .main-nav.is-open {
+                        display: block !important;
+                    }
+
+                    .site-header > .container {
+                        flex-wrap: wrap;
+                    }
+
+                    .main-nav ul {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0;
+                        width: 100%;
+                    }
+
+                    .main-nav li {
+                        width: 100%;
+                    }
+
+                    .main-nav a {
+                        display: block;
+                        padding: 12px 8px;
+                    }
+                }
+
+                @media (min-width: 769px) {
+                    .mobile-nav-toggle {
+                        display: none !important;
+                    }
+
+                    .main-nav {
+                        display: block !important;
+                    }
+                }
+            `;
+
+            document.head.appendChild(style);
+        }
+
+        toggle.addEventListener("click", () => {
+            const isOpen = nav.classList.toggle("is-open");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+            toggle.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Close navigation menu"
+                    : "Open navigation menu"
+            );
+
+            toggle.querySelector(
+                '[aria-hidden="true"]'
+            ).textContent = isOpen ? "✕" : "☰";
+        });
+
+        /* Close the mobile menu after a navigation link is clicked. */
+
+        nav.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                nav.classList.remove("is-open");
+
+                toggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                toggle.setAttribute(
+                    "aria-label",
+                    "Open navigation menu"
+                );
+
+                const icon = toggle.querySelector(
+                    '[aria-hidden="true"]'
+                );
+
+                if (icon) {
+                    icon.textContent = "☰";
+                }
+            });
+        });
+    }
+
+    /* HANDLE WEBSITE CLICKS */
 
     function initialiseEvents() {
-        if (initialized) return;
+        if (initialized) {
+            return;
+        }
 
         initialized = true;
 
         document.addEventListener("click", event => {
 
             /* ADD TO CART */
+
             const addButton = event.target.closest(
-                "[data-product-id]"
+                "[data-add-to-cart], button[data-product-id]"
             );
 
             if (addButton) {
                 event.preventDefault();
-                addToCart(readProductButton(addButton));
+
+                const product = readProductButton(addButton);
+
+                const added = addToCart(product);
+
+                if (added) {
+                    updateCartDisplay();
+                }
+
                 return;
             }
 
-            /* PRODUCT QUANTITY BUTTONS */
+            /* INCREASE OR DECREASE PRODUCT QUANTITY */
+
             const minusButton = event.target.closest(
                 "[data-product-minus]"
             );
@@ -449,13 +978,18 @@ const HoneyShop = (() => {
                 event.preventDefault();
 
                 const button = minusButton || plusButton;
-                const card = button.closest("[data-product-card]");
+
+                const card = button.closest(
+                    "[data-product-card]"
+                );
 
                 const input = card
                     ? card.querySelector("[data-product-quantity]")
                     : null;
 
-                if (!input) return;
+                if (!input) {
+                    return;
+                }
 
                 const current = Number(input.value || 1);
 
@@ -465,17 +999,32 @@ const HoneyShop = (() => {
 
                 input.value = Math.max(
                     1,
-                    Math.min(99, Number.isFinite(next) ? next : 1)
+                    Math.min(
+                        99,
+                        Number.isFinite(next) ? next : 1
+                    )
                 );
 
-                input.dispatchEvent(
-                    new Event("change", { bubbles: true })
+                const productButton = card.querySelector(
+                    "[data-add-to-cart], button[data-product-id]"
                 );
+
+                if (productButton) {
+                    const product = readProductButton(
+                        productButton
+                    );
+
+                    setProductQuantity(
+                        product.id,
+                        Number(input.value)
+                    );
+                }
 
                 return;
             }
 
-            /* QUANTITY BUTTONS ON CART PAGE */
+            /* CART PAGE QUANTITY BUTTONS */
+
             const cartQuantityButton = event.target.closest(
                 "[data-quantity-change]"
             );
@@ -484,6 +1033,7 @@ const HoneyShop = (() => {
                 event.preventDefault();
 
                 const id = cartQuantityButton.dataset.itemId;
+
                 const change = Number(
                     cartQuantityButton.dataset.quantityChange
                 );
@@ -495,35 +1045,45 @@ const HoneyShop = (() => {
                 return;
             }
 
-            /* REMOVE FROM CART */
+            /* REMOVE ITEM */
+
             const removeButton = event.target.closest(
                 "[data-remove-item]"
             );
 
             if (removeButton) {
                 event.preventDefault();
-                removeItem(removeButton.dataset.removeItem);
+
+                removeItem(
+                    removeButton.dataset.removeItem
+                );
+
                 return;
             }
 
-            /* PROCEED TO CHECKOUT */
+            /* CHECKOUT */
+
             const checkoutButton = event.target.closest(
                 "[data-checkout-button]"
             );
 
             if (checkoutButton) {
                 event.preventDefault();
+
                 prepareCheckout();
             }
         });
 
-        /* VALIDATE MANUALLY ENTERED QUANTITY */
+        /* HANDLE MANUAL QUANTITY CHANGES */
+
         document.addEventListener("change", event => {
             const input = event.target.closest(
                 "[data-product-quantity]"
             );
 
-            if (!input) return;
+            if (!input) {
+                return;
+            }
 
             const quantity = Number(input.value);
 
@@ -532,9 +1092,41 @@ const HoneyShop = (() => {
                     ? Math.max(1, Math.min(99, quantity))
                     : 1
             );
+
+            const card = input.closest(
+                "[data-product-card]"
+            );
+
+            if (!card) {
+                return;
+            }
+
+            const addButton = card.querySelector(
+                "[data-add-to-cart], button[data-product-id]"
+            );
+
+            if (!addButton) {
+                return;
+            }
+
+            const product = readProductButton(addButton);
+
+            const cart = getCart();
+
+            const existing = cart.find(
+                item => item.id === String(product.id)
+            );
+
+            if (existing) {
+                setProductQuantity(
+                    product.id,
+                    Number(input.value)
+                );
+            }
         });
 
-        /* UPDATE IF ANOTHER TAB CHANGES THE CART */
+        /* SYNCHRONISE CART BETWEEN TABS */
+
         window.addEventListener("storage", event => {
             if (event.key === CART_KEY) {
                 updateCartDisplay();
@@ -542,19 +1134,29 @@ const HoneyShop = (() => {
         });
     }
 
-    /* START WEBSITE FUNCTIONALITY */
+    /* START WEBSITE */
 
     function init() {
         initialiseEvents();
+
+        initialiseMobileNavigation();
+
+        createShopCartBar();
+
         updateCartDisplay();
+
         initialiseCheckout();
 
-        const year = document.querySelector("#copyright-year");
+        const year = document.querySelector(
+            "#copyright-year"
+        );
 
         if (year) {
             year.textContent = new Date().getFullYear();
         }
     }
+
+    /* PUBLIC FUNCTIONS */
 
     return {
         init,
@@ -565,10 +1167,12 @@ const HoneyShop = (() => {
         getCart,
         getCartCount,
         getSubtotal,
+
         getSizes: () => SIZES.map(size => ({
             ...size,
             price: priceForSize(size.litres)
         })),
+
         formatMoney,
         prepareCheckout,
         getPendingOrder,
@@ -576,4 +1180,9 @@ const HoneyShop = (() => {
     };
 })();
 
-document.addEventListener("DOMContentLoaded", HoneyShop.init);
+/* RUN AFTER HTML HAS LOADED */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    HoneyShop.init
+);
