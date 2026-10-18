@@ -248,10 +248,10 @@ const HoneyShop = (() => {
 
     function changeQuantity(id, change) {
         const cart = getCart();
-
         const item = cart.find(
             product => product.id === String(id)
         );
+        
 
         if (!item) {
             return;
@@ -260,15 +260,17 @@ const HoneyShop = (() => {
         const nextQuantity =
             item.quantity + Number(change);
 
-        if (nextQuantity <= 0) {
-            saveCart(
-                cart.filter(product => product.id !== String(id))
-            );
+       if (nextQuantity <= 0) {
+    saveCart(
+        cart.filter(product => product.id !== String(id))
+    );
 
-            showToast("Item removed from your cart.");
+    updateCartDisplay();
 
-            return;
-        }
+    showToast("Item removed from your cart.");
+
+    return;
+}
 
         item.quantity = Math.min(99, nextQuantity);
 
@@ -498,8 +500,7 @@ const HoneyShop = (() => {
         if (!bar) {
             return;
         }
-
-        const count = cart.reduce(
+                const count = cart.reduce(
             (total, item) => total + item.quantity,
             0
         );
@@ -747,8 +748,7 @@ const HoneyShop = (() => {
             }
         }
 
-        if (total) {
-            const confirmedFee =
+        if (total) {            const confirmedFee =
                 order.deliveryFeeConfirmed
                     ? Number(order.deliveryFee || 0)
                     : 0;
@@ -973,55 +973,56 @@ const HoneyShop = (() => {
             const plusButton = event.target.closest(
                 "[data-product-plus]"
             );
-
             if (minusButton || plusButton) {
-                event.preventDefault();
+    event.preventDefault();
 
-                const button = minusButton || plusButton;
+    const button = minusButton || plusButton;
 
-                const card = button.closest(
-                    "[data-product-card]"
-                );
+    const card = button.closest("[data-product-card]");
 
-                const input = card
-                    ? card.querySelector("[data-product-quantity]")
-                    : null;
+    const input = card
+        ? card.querySelector("[data-product-quantity]")
+        : null;
 
-                if (!input) {
-                    return;
-                }
+    if (!input || !card) {
+        return;
+    }
 
-                const current = Number(input.value || 1);
+    const current = Number(input.value || 1);
 
-                const next = plusButton
-                    ? current + 1
-                    : current - 1;
+    const next = plusButton
+        ? current + 1
+        : current - 1;
 
-                input.value = Math.max(
-                    1,
-                    Math.min(
-                        99,
-                        Number.isFinite(next) ? next : 1
-                    )
-                );
+    const productButton = card.querySelector(
+        "[data-add-to-cart], button[data-product-id]"
+    );
 
-                const productButton = card.querySelector(
-                    "[data-add-to-cart], button[data-product-id]"
-                );
+    if (!productButton) {
+        return;
+    }
 
-                if (productButton) {
-                    const product = readProductButton(
-                        productButton
-                    );
+    const product = readProductButton(productButton);
 
-                    setProductQuantity(
-                        product.id,
-                        Number(input.value)
-                    );
-                }
+    // Remove the product when minus is pressed at quantity 1.
+    if (next <= 0) {
+        removeItem(product.id);
+        updateCartDisplay();
+        return;
+    }
 
-                return;
-            }
+    // Otherwise, update the quantity normally.
+    input.value = Math.min(99, next);
+
+    setProductQuantity(
+        product.id,
+        Number(input.value)
+    );
+
+    updateCartDisplay();
+
+    return;
+}
 
             /* CART PAGE QUANTITY BUTTONS */
 
@@ -1181,6 +1182,7 @@ const HoneyShop = (() => {
 })();
 
 /* RUN AFTER HTML HAS LOADED */
+window.HoneyShop = HoneyShop;
 
 document.addEventListener(
     "DOMContentLoaded",

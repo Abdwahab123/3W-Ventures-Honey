@@ -3,29 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta
-        name="description"
-        content="Complete your 3W Ventures Honey order and arrange delivery within Lagos State."
-    >
-
+    <meta name="description" content="Complete your 3W Ventures Honey order securely and arrange delivery or pickup with our team.">
     <title>Checkout | 3W Ventures Honey</title>
-
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-
-    <!-- Announcement Bar -->
     <div class="announcement-bar">
-        <p>Delivering honey across Lagos State</p>
+        <p>3W Ventures Honey · Nature's Liquid Gold</p>
     </div>
 
-    <!-- Header -->
     <header class="site-header">
-
         <div class="brand">
-            <a href="index.html" aria-label="3W Ventures Honey Homepage">
+            <a href="index.html" aria-label="3W Ventures Honey homepage">
                 <span class="brand-name">3W VENTURES</span>
                 <span class="brand-subtitle">HONEY · NATURE'S LIQUID GOLD</span>
             </a>
@@ -36,538 +25,310 @@
             <a href="shop.html">Shop Honey</a>
             <a href="about.html">Our Story</a>
             <a href="contact.html">Contact</a>
-
-            <a href="cart.html" class="cart-link">
-                Cart <span class="cart-count">0</span>
-            </a>
+            <a href="cart.html" class="cart-link">Cart <span class="cart-count" data-cart-count>0</span></a>
         </nav>
-
     </header>
 
-    <!-- Main Content -->
     <main>
-
-        <!-- Checkout Introduction -->
         <section class="page-hero checkout-hero">
-
-            <p class="eyebrow">ALMOST YOURS</p>
-
+            <p class="eyebrow">JUST A FEW MORE STEPS</p>
             <h1>Complete Your Order</h1>
-
-            <p>
-                Provide your details and delivery location.
-                Your delivery fee will be confirmed before payment.
-            </p>
-
+            <p>Enter your contact details, review your honey order, and continue to secure payment.</p>
         </section>
 
-        <!-- Checkout Layout -->
         <section class="checkout-section">
-
-            <!-- Checkout Form -->
             <div class="checkout-form-container">
-
-                <form id="checkout-form">
-
-                    <!-- Step 1: Customer Details -->
+                <form id="checkout-form" autocomplete="on">
                     <section class="checkout-step">
-
                         <p class="eyebrow">STEP 01</p>
-
-                        <h2>Your Details</h2>
-
-                        <p>
-                            Enter the details we need to process your order.
-                        </p>
+                        <h2>Your Contact Details</h2>
+                        <p>We will use these details to contact you about your order.</p>
 
                         <div class="form-group">
-
-                            <label for="full-name">Full Name *</label>
-
-                            <input
-                                type="text"
-                                id="full-name"
-                                name="full_name"
-                                autocomplete="name"
-                                placeholder="Enter your full name"
-                                required
-                            >
-
+                            <label for="full-name">Full name *</label>
+                            <input type="text" id="full-name" name="full_name" autocomplete="name" placeholder="Enter your full name" required>
                         </div>
 
                         <div class="form-group">
-
-                            <label for="email">Email Address *</label>
-
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                autocomplete="email"
-                                placeholder="Enter your email address"
-                                required
-                            >
-
+                            <label for="email">Email address *</label>
+                            <input type="email" id="email" name="email" autocomplete="email" placeholder="Enter your email address" required>
                         </div>
 
                         <div class="form-group">
-
-                            <label for="phone">Phone Number *</label>
-
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                autocomplete="tel"
-                                placeholder="Enter your phone number"
-                                required
-                            >
-
+                            <label for="phone">Phone number *</label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="e.g. 08012345678" required>
                         </div>
-
                     </section>
 
-                    <!-- Step 2: Delivery Location -->
                     <section class="checkout-step">
-
                         <p class="eyebrow">STEP 02</p>
-
-                        <h2>Delivery Location</h2>
-
-                        <p>
-                            We currently deliver within Lagos State, Nigeria.
-                            Provide a location where your order can be delivered.
-                        </p>
-
-                        <!-- Location Selection -->
-                        <div class="location-options">
-
-                            <h3>Choose How to Provide Your Location</h3>
-
-                            <div class="form-group">
-
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="location_method"
-                                        value="current_location"
-                                        required
-                                    >
-
-                                    Use My Current Location
-                                </label>
-
-                            </div>
-
-                            <div class="form-group">
-
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="location_method"
-                                        value="manual_address"
-                                    >
-
-                                    Enter My Address Manually
-                                </label>
-
-                            </div>
-
-                        </div>
-
-                        <!-- Current Location -->
-                        <div class="form-group">
-
-                            <button
-                                type="button"
-                                id="get-location-button"
-                            >
-                                Use My Current Location
-                            </button>
-
-                            <p id="location-status" aria-live="polite">
-                                Your browser may request permission to access
-                                your location.
-                            </p>
-
-                        </div>
-
-                        <!-- Address -->
-                        <div class="form-group">
-
-                            <label for="delivery-address">
-                                Street Address *
-                            </label>
-
-                            <input
-                                type="text"
-                                id="delivery-address"
-                                name="delivery_address"
-                                autocomplete="street-address"
-                                placeholder="House number, street and area"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label for="delivery-area">
-                                Area or Neighbourhood *
-                            </label>
-
-                            <input
-                                type="text"
-                                id="delivery-area"
-                                name="delivery_area"
-                                placeholder="e.g. Ikeja, Lekki or Yaba"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label for="delivery-state">
-                                State *
-                            </label>
-
-                            <select
-                                id="delivery-state"
-                                name="delivery_state"
-                                required
-                            >
-
-                                <option value="">Select your state</option>
-
-                                <option value="Lagos" selected>
-                                    Lagos State
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label for="delivery-directions">
-                                Additional Directions (Optional)
-                            </label>
-
-                            <textarea
-                                id="delivery-directions"
-                                name="delivery_directions"
-                                rows="3"
-                                placeholder="Nearby landmarks or directions"
-                            ></textarea>
-
-                        </div>
-
-                        <!-- Map Placeholder -->
-                        <div class="delivery-map-container">
-
-                            <h3>Confirm Your Delivery Point</h3>
-
-                            <p>
-                                A map will be added during the integration
-                                stage so you can view or pin your delivery
-                                location.
-                            </p>
-
-                            <div
-                                id="delivery-map"
-                                aria-label="Delivery location map"
-                            >
-                                Interactive map will appear here.
-                            </div>
-
-                            <input
-                                type="hidden"
-                                id="latitude"
-                                name="latitude"
-                            >
-
-                            <input
-                                type="hidden"
-                                id="longitude"
-                                name="longitude"
-                            >
-
-                        </div>
-
-                    </section>
-
-                    <!-- Step 3: Delivery Fee -->
-                    <section class="checkout-step">
-
-                        <p class="eyebrow">STEP 03</p>
-
-                        <h2>Delivery Fee Confirmation</h2>
-
-                        <p>
-                            Your delivery fee depends on your location
-                            within Lagos State.
-                        </p>
-
-                        <div class="delivery-fee-notice">
-
-                            <h3>Awaiting Delivery Confirmation</h3>
-
-                            <p>
-                                Your delivery address must be reviewed
-                                before the delivery fee can be confirmed.
-                            </p>
-
-                            <p>
-                                You cannot change the delivery fee.
-                                It will be entered and confirmed by
-                                the business.
-                            </p>
-
-                        </div>
-
-                        <!-- These fields will be controlled by the
-                             checkout system, not by the customer. -->
-                        <div class="form-group">
-
-                            <label for="delivery-fee">
-                                Confirmed Delivery Fee
-                            </label>
-
-                            <input
-                                type="text"
-                                id="delivery-fee"
-                                value="Awaiting confirmation"
-                                readonly
-                            >
-
-                        </div>
-
-                        <p id="delivery-confirmation-status" aria-live="polite">
-                            Payment will become available after your delivery
-                            fee has been confirmed.
-                        </p>
-
-                    </section>
-
-                    <!-- Step 4: Payment -->
-                    <section class="checkout-step">
-
-                        <p class="eyebrow">STEP 04</p>
-
                         <h2>Payment</h2>
-
-                        <p>
-                            Pay securely through Paystack after your
-                            delivery details and delivery fee have been
-                            confirmed.
-                        </p>
+                        <p>Pay for your selected honey through Paystack. Your honey subtotal is shown in the order summary.</p>
 
                         <div class="payment-method">
-
-                            <h3>Available Payment Method</h3>
-
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="payment_method"
-                                    value="paystack"
-                                    checked
-                                >
-
-                                Paystack
+                            <label for="payment-paystack">
+                                <input type="radio" id="payment-paystack" name="payment_method" value="paystack" checked>
+                                Pay securely with Paystack
                             </label>
-
-                            <p>
-                                Your payment will be processed through
-                                Paystack's secure payment system.
-                            </p>
-
+                            <p>Your payment details are handled by Paystack. Never share your card PIN or one-time password with anyone.</p>
                         </div>
 
                         <div class="payment-notice">
-
-                            <p>
-                                Payment is not available until the business
-                                confirms your delivery fee.
-                            </p>
-
-                            <p>
-                                Do not send payment to a personal account
-                                outside the official checkout process.
-                            </p>
-
+                            <h3>Delivery or pickup</h3>
+                            <p>Delivery fees are not included in the honey subtotal. After your payment is confirmed, contact us on WhatsApp so we can agree on delivery or pickup arrangements and any applicable delivery fee.</p>
+                            <a href="https://wa.me/2348055181850" target="_blank" rel="noopener noreferrer">Ask us about delivery on WhatsApp</a>
                         </div>
 
-                        <button
-                            type="submit"
-                            id="place-order-button"
-                            disabled
-                        >
-                            Awaiting Delivery Fee Confirmation
+                        <button type="submit" id="place-order-button" class="primary-button">
+                            Pay Securely with Paystack
                         </button>
-
+                        <p class="checkout-security-note">Please review your order before proceeding to payment.</p>
                     </section>
-
                 </form>
-
             </div>
 
-            <!-- Order Summary -->
-            <aside class="checkout-order-summary">
-
-                <h2>Your Order</h2>
-
-                <!-- JavaScript will display the selected products here. -->
-                <div id="checkout-cart-items">
-
-                    <p>
-                        Your selected honey products will appear here.
-                    </p>
-
+            <aside class="checkout-order-summary" aria-labelledby="checkout-summary-title">
+                <h2 id="checkout-summary-title">Your Order</h2>
+                <div id="checkout-cart-items" data-checkout-items aria-live="polite">
+                    <p>Your selected honey products will appear here.</p>
                 </div>
 
                 <div class="summary-row">
-
-                    <span>Honey Subtotal</span>
-
-                    <span id="checkout-subtotal">₦0</span>
-
+                    <span>Honey subtotal</span>
+                    <strong id="checkout-subtotal" data-checkout-subtotal>₦0</strong>
                 </div>
-
-                <div class="summary-row">
-
-                    <span>Delivery Fee</span>
-
-                    <span id="checkout-delivery-fee">
-                        Awaiting confirmation
-                    </span>
-
-                </div>
-
                 <div class="summary-row total-row">
-
-                    <strong>Total Payable</strong>
-
-                    <strong id="checkout-total">
-                        Awaiting confirmation
-                    </strong>
-
+                    <strong>Amount for honey</strong>
+                    <strong id="checkout-total" data-checkout-total>₦0</strong>
                 </div>
-
-                <p class="checkout-summary-note">
-                    The final total will include your honey subtotal and
-                    the delivery fee confirmed by the business.
-                </p>
-
-                <a href="cart.html" class="back-to-cart">
-                    Return to Cart
-                </a>
-
+                <p class="checkout-summary-note">Delivery or pickup arrangements are made separately after payment. Any delivery fee will be discussed with you before delivery is arranged.</p>
+                <a href="cart.html" class="back-to-cart">← Return to Cart</a>
             </aside>
-
         </section>
 
-        <!-- Customer Support -->
         <section class="checkout-support">
-
             <h2>Need Help With Your Order?</h2>
-
-            <p>
-                Contact us if you have questions about your order
-                or delivery arrangements.
-            </p>
-
-            <p>
-                Phone:
-                <a href="tel:+2348055181850">08055181850</a>
-            </p>
-
-            <p>
-                Email:
-                <a href="mailto:ajoselateephat0@gmail.com">
-                    ajoselateephat0@gmail.com
-                </a>
-            </p>
-
-            <p>
-                <a
-                    href="https://wa.me/2348055181850"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Chat with us on WhatsApp
-                </a>
-            </p>
-
+            <p>Contact us if you have questions about your honey order or delivery arrangements.</p>
+            <p>Phone: <a href="tel:+2348055181850">08055181850</a></p>
+            <p>Email: <a href="mailto:ajoselateephat0@gmail.com">ajoselateephat0@gmail.com</a></p>
+            <p><a href="https://wa.me/2348055181850" target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp</a></p>
         </section>
-
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
-
         <div class="footer-brand">
-
-            <a href="index.html">
-                <span class="brand-name">3W VENTURES HONEY</span>
-            </a>
-
+            <a href="index.html"><span class="brand-name">3W VENTURES HONEY</span></a>
             <p>Nature's Liquid Gold.</p>
-
-            <p>Delivering honey across Lagos State.</p>
-
+            <p>Quality honey, with delivery or pickup arranged directly with our team.</p>
         </div>
-
         <div class="footer-links">
-
             <h3>Explore</h3>
-
             <a href="index.html">Home</a>
             <a href="shop.html">Shop Honey</a>
             <a href="about.html">Our Story</a>
             <a href="contact.html">Contact Us</a>
-
         </div>
-
         <div class="footer-links">
-
             <h3>Customer Care</h3>
-
             <a href="cart.html">Shopping Cart</a>
             <a href="contact.html">Contact Support</a>
-            <a href="contact.html">Delivery Information</a>
-
+            <a href="https://wa.me/2348055181850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
         </div>
-
         <div class="footer-contact">
-
             <h3>Contact Us</h3>
-
-            <p>
-                Phone:
-                <a href="tel:+2348055181850">08055181850</a>
-            </p>
-
-            <p>
-                Email:
-                <a href="mailto:ajoselateephat0@gmail.com">
-                    ajoselateephat0@gmail.com
-                </a>
-            </p>
-
+            <p><a href="tel:+2348055181850">08055181850</a></p>
+            <p><a href="mailto:ajoselateephat0@gmail.com">ajoselateephat0@gmail.com</a></p>
         </div>
-
         <div class="footer-bottom">
-
-            <p>
-                &copy; 2026 3W Ventures Honey. All rights reserved.
-            </p>
-
+            <p>&copy; <span id="copyright-year">2026</span> 3W Ventures Honey. All rights reserved.</p>
         </div>
-
     </footer>
-    <script src="java/java.js" defer></script>
 
+    <script src="java/java.js" defer></script>
+    <script src="https://js.paystack.co/v1/inline.js" defer></script>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function () {
+            const FORM_ENDPOINT = "https://formspree.io/f/mzedonrg";
+            const PAYSTACK_PUBLIC_KEY = "pk_test_49e2d7ad71a83033e569c6033506b1793635ad75";
+
+            const cartContainer = document.querySelector("[data-checkout-items]");
+            const form = document.getElementById("checkout-form");
+            const submitButton = document.getElementById("place-order-button");
+
+            if (!window.HoneyShop) {
+                console.error("HoneyShop cart script did not load.");
+                if (submitButton) submitButton.disabled = true;
+                alert("The cart script did not load. Refresh the page and try again.");
+                return;
+            }
+
+            const pendingOrder = HoneyShop.getPendingOrder();
+            const cart = HoneyShop.getCart();
+            const items = pendingOrder && Array.isArray(pendingOrder.items)
+                ? pendingOrder.items
+                : cart;
+
+            const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+            })[character]);
+
+            const subtotal = items.reduce((sum, item) =>
+                sum + (Number(item.price) || 0) * (Number(item.quantity) || 1), 0);
+
+            const formatMoney = amount => HoneyShop.formatMoney(amount);
+
+            if (cartContainer) {
+                if (!items.length) {
+                    cartContainer.innerHTML = '<p>Your cart is empty. <a href="shop.html">Shop honey</a> to add products before checkout.</p>';
+                    if (submitButton) submitButton.disabled = true;
+                } else {
+                    cartContainer.innerHTML = items.map(item => {
+                        const quantity = Number(item.quantity) || 1;
+                        const price = Number(item.price) || 0;
+                        return `<div class="checkout-item"><div><strong>${escapeHTML(item.name || "3W Ventures Honey")}</strong><p>${escapeHTML(item.size || "Honey")} · Quantity: ${quantity}</p></div><strong>${formatMoney(price * quantity)}</strong></div>`;
+                    }).join("");
+                }
+            }
+
+            const subtotalElement = document.querySelector("[data-checkout-subtotal]");
+            const totalElement = document.querySelector("[data-checkout-total]");
+            if (subtotalElement) subtotalElement.textContent = formatMoney(subtotal);
+            if (totalElement) totalElement.textContent = formatMoney(subtotal);
+
+            if (!form) return;
+
+            async function sendOrderToFormspree(details) {
+                const formData = new FormData();
+                formData.append("Customer name", details.name);
+                formData.append("Customer email", details.email);
+                formData.append("Customer phone", details.phone);
+                formData.append("Order reference", details.orderReference);
+                formData.append("Paystack transaction reference", details.transactionReference || "Not available");
+                formData.append("Payment status", details.paymentStatus);
+                formData.append("Honey subtotal (NGN)", subtotal.toFixed(2));
+                formData.append("Order items", details.itemSummary);
+                formData.append("_subject", "3W Ventures Honey checkout — " + details.orderReference);
+
+                const result = await fetch(FORM_ENDPOINT, {
+                    method: "POST",
+                    body: formData,
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (!result.ok) throw new Error("Formspree could not accept the order details.");
+            }
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                if (!form.reportValidity()) return;
+
+                if (!items.length || subtotal <= 0) {
+                    alert("Your cart is empty. Please add honey to your cart before checkout.");
+                    return;
+                }
+
+                if (typeof window.PaystackPop === "undefined") {
+                    alert("Paystack did not load. Check your internet connection, then refresh the page.");
+                    return;
+                }
+
+                const name = document.getElementById("full-name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const phone = document.getElementById("phone").value.trim();
+                const orderReference = "3W-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+                const itemSummary = items.map(item =>
+                    `${item.name || "Honey"} (${item.size || "size not specified"}) x${Number(item.quantity) || 1}`
+                ).join(", ");
+
+                submitButton.disabled = true;
+                submitButton.textContent = "Opening secure payment…";
+
+                try {
+                    const handler = window.PaystackPop.setup({
+                        key: PAYSTACK_PUBLIC_KEY,
+                        email: email,
+                        amount: Math.round(subtotal * 100),
+                        currency: "NGN",
+                        ref: orderReference,
+                        metadata: {
+                            custom_fields: [
+                                { display_name: "Customer name", variable_name: "customer_name", value: name },
+                                { display_name: "Customer phone", variable_name: "customer_phone", value: phone },
+                                { display_name: "Order items", variable_name: "order_items", value: itemSummary }
+                            ]
+                        },
+                        callback: function (response) {
+                            submitButton.textContent = "Saving your order…";
+
+                            const transactionReference = response && response.reference
+                                ? response.reference
+                                : orderReference;
+
+                            /*
+                             * Preserve the order details before clearing the cart.
+                             * A browser callback/reference is not secure verification;
+                             * verify the transaction with Paystack or a trusted backend
+                             * before treating the payment as definitively confirmed.
+                             */
+                            try {
+                                const savedOrder = {
+                                    ...(HoneyShop.getPendingOrder() || {}),
+                                    items: items,
+                                    subtotal: subtotal,
+                                    currency: "NGN",
+                                    customer: { name: name, email: email, phone: phone },
+                                    name: name,
+                                    email: email,
+                                    phone: phone,
+                                    orderReference: orderReference,
+                                    transactionReference: transactionReference,
+                                    paymentStatus: "Paystack reference received — verification required",
+                                    createdAt: new Date().toISOString()
+                                };
+                                localStorage.setItem("3w_honey_pending_order", JSON.stringify(savedOrder));
+                            } catch (storageError) {
+                                console.error("Could not save order details:", storageError);
+                                alert("We could not save your order details in this browser. Please save your Paystack reference and contact us before continuing.");
+                                submitButton.disabled = false;
+                                submitButton.textContent = "Pay Securely with Paystack";
+                                return;
+                            }
+
+                            sendOrderToFormspree({
+                                name: name,
+                                email: email,
+                                phone: phone,
+                                orderReference: orderReference,
+                                transactionReference: transactionReference,
+                                paymentStatus: "Paystack reference received — verify transaction before confirming payment",
+                                itemSummary: itemSummary
+                            }).then(function () {
+                                /* Clear only after the callback and order notification succeed. */
+                                HoneyShop.clearCart();
+                                window.location.href = "success.html";
+                            }).catch(function (error) {
+                                console.error("Formspree submission error:", error);
+                                alert("Paystack returned a reference, but we could not send the order details. Your cart has been kept. Save your Paystack reference and contact us.");
+                            }).finally(function () {
+                                submitButton.disabled = false;
+                                submitButton.textContent = "Pay Securely with Paystack";
+                            });
+                        },
+                        onClose: function () {
+                            submitButton.disabled = false;
+                            submitButton.textContent = "Pay Securely with Paystack";
+                        }
+                    });
+
+                    handler.openIframe();
+                } catch (error) {
+                    console.error("Paystack setup error:", error);
+                    alert("Paystack could not start. Please refresh the page and try again. If it continues, open the Console and send me the new red error.");
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Pay Securely with Paystack";
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -32,7 +32,7 @@
             <a href="about.html">Our Story</a>
             <a href="contact.html">Contact</a>
             <a href="cart.html" class="cart-link" aria-current="page">
-                Cart <span class="cart-count">0</span>
+                Cart <span class="cart-count" data-cart-count>0</span>
             </a>
         </nav>
 
@@ -64,7 +64,7 @@
             </div>
 
             <!-- JavaScript will insert cart items here -->
-            <div id="cart-items" class="cart-items">
+            <div id="cart-items" class="cart-items" data-cart-items>
 
                 <div class="empty-cart-message">
 
@@ -91,7 +91,7 @@
 
                 <div class="summary-row">
                     <span>Honey Subtotal</span>
-                    <span id="cart-subtotal">₦0</span>
+                    <span id="cart-subtotal" data-cart-subtotal>₦0</span>
                 </div>
 
                 <div class="summary-row">
@@ -101,7 +101,7 @@
 
                 <div class="summary-row total-row">
                     <strong>Honey Total</strong>
-                    <strong id="cart-total">₦0</strong>
+                    <strong id="cart-total" data-cart-total>₦0</strong>
                 </div>
 
                 <p class="cart-delivery-note">
@@ -110,7 +110,7 @@
                     delivery address has been reviewed.
                 </p>
 
-                <a href="checkout.html" class="checkout-button">
+                <a href="checkout.html" class="checkout-button" data-checkout-button>
                     Proceed to Checkout
                 </a>
 

@@ -4,293 +4,1398 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Order Successful | 3W Ventures Honey</title>
+
     <meta
         name="description"
-        content="Order confirmation for 3W Ventures Honey."
+        content="Thank you for ordering from 3W Ventures Honey. Contact us on WhatsApp to arrange delivery or pickup."
     >
 
-    <title>Order Confirmation | 3W Ventures Honey</title>
+    <style>
+        /* ==============================
+           GENERAL STYLES
+        ============================== */
 
-    <link rel="stylesheet" href="css/style.css">
+        :root {
+            --honey: #e5a900;
+            --honey-dark: #bd8000;
+            --brown: #422b12;
+            --brown-light: #6f4a22;
+            --cream: #fffaf0;
+            --white: #ffffff;
+            --green: #247a43;
+            --green-light: #e9f7ed;
+            --text: #332b20;
+            --muted: #756c60;
+            --border: #eee3d0;
+            --shadow: 0 12px 35px rgba(66, 43, 18, 0.09);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .site-header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 17px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand {
+            color: var(--brown);
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .brand span {
+            color: var(--honey-dark);
+        }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .navigation a {
+            color: var(--brown);
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .navigation a:hover {
+            color: var(--honey-dark);
+        }
+
+        /* ==============================
+           MAIN SECTION
+        ============================== */
+
+        main {
+            padding: 55px 0 70px;
+        }
+
+        .success-card {
+            max-width: 820px;
+            margin: 0 auto;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .success-banner {
+            text-align: center;
+            padding: 42px 25px 35px;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(229, 169, 0, 0.17),
+                    transparent 45%
+                ),
+                linear-gradient(135deg, #fffdf7, #fff5d9);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .success-icon {
+            width: 82px;
+            height: 82px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--green-light);
+            border: 3px solid #bde5c7;
+            border-radius: 50%;
+            color: var(--green);
+            font-size: 43px;
+            font-weight: 800;
+        }
+
+        .success-banner h1 {
+            color: var(--brown);
+            font-size: clamp(27px, 5vw, 38px);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .success-banner p {
+            max-width: 540px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .success-badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 7px 17px;
+            background: var(--green-light);
+            color: var(--green);
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        /* ==============================
+           CARD CONTENT
+        ============================== */
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .section-heading {
+            color: var(--brown);
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 13px;
+            margin-bottom: 32px;
+        }
+
+        .status-box {
+            padding: 17px 14px;
+            border: 1px solid var(--border);
+            background: #fffdf8;
+            border-radius: 13px;
+            min-width: 0;
+        }
+
+        .status-label {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .status-value {
+            display: block;
+            color: var(--brown);
+            font-size: 15px;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .status-value.success {
+            color: var(--green);
+        }
+
+        /* ==============================
+           ORDER SUMMARY
+        ============================== */
+
+        .order-section {
+            margin-bottom: 30px;
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .order-table th,
+        .order-table td {
+            padding: 14px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .order-table th {
+            background: #fff9e9;
+            color: var(--brown);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .order-table th:last-child,
+        .order-table td:last-child {
+            text-align: right;
+        }
+
+        .order-table td {
+            overflow-wrap: anywhere;
+        }
+
+        .empty-order {
+            display: none;
+            padding: 20px;
+            background: #fffaf0;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .order-totals {
+            max-width: 360px;
+            margin: 20px 0 0 auto;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 9px 0;
+            font-size: 14px;
+        }
+
+        .total-row span:first-child {
+            color: var(--muted);
+        }
+
+        .total-row span:last-child {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .total-row.grand-total {
+            margin-top: 8px;
+            padding-top: 17px;
+            border-top: 2px solid var(--border);
+            color: var(--brown);
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .total-row.grand-total span {
+            color: var(--brown);
+            font-size: inherit;
+            font-weight: 800;
+        }
+
+        /* ==============================
+           WHATSAPP DELIVERY SECTION
+        ============================== */
+
+        .delivery-box {
+            padding: 25px;
+            margin-bottom: 28px;
+            background: #f1fbf3;
+            border: 1px solid #ccebd3;
+            border-radius: 16px;
+        }
+
+        .delivery-box h2 {
+            color: #185b30;
+            font-size: 21px;
+            margin-bottom: 9px;
+        }
+
+        .delivery-box p {
+            color: #466451;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .delivery-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .delivery-list li {
+            color: #355842;
+            font-size: 14px;
+            margin: 9px 0;
+        }
+
+        .delivery-list li::before {
+            content: "✓";
+            display: inline-block;
+            margin-right: 9px;
+            color: var(--green);
+            font-weight: 800;
+        }
+
+        .whatsapp-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 20px;
+            background: #20a653;
+            color: var(--white);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 800;
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .whatsapp-button:hover {
+            background: #188641;
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-icon {
+            font-size: 21px;
+        }
+
+        .whatsapp-note {
+            display: block;
+            margin-top: 12px;
+            color: #55745e;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* ==============================
+           NEXT STEPS
+        ============================== */
+
+        .next-steps {
+            padding: 23px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .next-steps h2 {
+            color: var(--brown);
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+
+        .step {
+            display: flex;
+            gap: 13px;
+            margin: 15px 0;
+        }
+
+        .step-number {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 0 0 30px;
+            width: 30px;
+            height: 30px;
+            background: #fff2c7;
+            border-radius: 50%;
+            color: var(--brown);
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .step-content strong {
+            display: block;
+            color: var(--brown);
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .step-content p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ==============================
+           ACTION BUTTONS
+        ============================== */
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            min-width: 180px;
+            padding: 14px 20px;
+            border: 1px solid var(--honey-dark);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 800;
+            transition: 0.2s ease;
+        }
+
+        .button-primary {
+            background: var(--honey);
+            color: var(--brown);
+        }
+
+        .button-primary:hover {
+            background: #f3bd28;
+        }
+
+        .button-secondary {
+            background: var(--white);
+            color: var(--brown);
+        }
+
+        .button-secondary:hover {
+            background: #fff8e6;
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .site-footer {
+            padding: 30px 0;
+            background: var(--brown);
+            color: #f7ead4;
+            text-align: center;
+        }
+
+        .footer-brand {
+            color: var(--white);
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand span {
+            color: #ffd45b;
+        }
+
+        .site-footer p {
+            font-size: 13px;
+            margin: 6px 0;
+            color: #e9dac4;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin: 16px 0;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #ffd45b;
+        }
+
+        /* ==============================
+           MOBILE RESPONSIVENESS
+        ============================== */
+
+        @media (max-width: 650px) {
+            .header-content {
+                flex-direction: column;
+                gap: 13px;
+            }
+
+            .navigation {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .navigation a {
+                font-size: 13px;
+            }
+
+            main {
+                padding: 28px 0 45px;
+            }
+
+            .success-card {
+                border-radius: 16px;
+            }
+
+            .success-banner {
+                padding: 32px 18px;
+            }
+
+            .success-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 36px;
+            }
+
+            .card-content {
+                padding: 20px 16px;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .status-box {
+                padding: 14px;
+            }
+
+            .order-table th,
+            .order-table td {
+                padding: 12px 6px;
+                font-size: 12px;
+            }
+
+            .order-table th {
+                font-size: 10px;
+            }
+
+            .delivery-box {
+                padding: 20px 15px;
+            }
+
+            .next-steps {
+                padding: 18px 14px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        <p>Thank you for choosing 3W Ventures Honey</p>
-    </div>
+    <!-- HEADER -->
 
-    <!-- Header -->
     <header class="site-header">
+        <div class="container header-content">
 
-        <div class="brand">
-            <a href="index.html" aria-label="3W Ventures Honey Homepage">
-                <span class="brand-name">3W VENTURES</span>
-                <span class="brand-subtitle">HONEY · NATURE'S LIQUID GOLD</span>
+            <a href="index.html" class="brand">
+                3W Ventures <span>Honey</span>
             </a>
+
+            <nav class="navigation" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About Us</a>
+                <a href="contact(1).html">Contact</a>
+            </nav>
+
         </div>
-
-        <nav class="main-navigation" aria-label="Main navigation">
-            <a href="index.html">Home</a>
-            <a href="shop.html">Shop Honey</a>
-            <a href="about.html">Our Story</a>
-            <a href="contact.html">Contact</a>
-
-            <a href="cart.html" class="cart-link">
-                Cart <span class="cart-count">0</span>
-            </a>
-        </nav>
-
     </header>
 
-    <!-- Main Content -->
+
+    <!-- MAIN CONTENT -->
+
     <main>
+        <div class="container">
 
-        <section class="success-section">
+            <section class="success-card">
 
-            <div class="success-content">
+                <!-- SUCCESS MESSAGE -->
 
-                <p class="eyebrow">ORDER UPDATE</p>
+                <div class="success-banner">
 
-                <h1 id="confirmation-heading">
-                    Thank You for Your Order
-                </h1>
+                    <div class="success-icon" aria-hidden="true">
+                        ✓
+                    </div>
 
-                <p id="confirmation-message" aria-live="polite">
-                    Your order status is being checked.
-                    Please wait while we confirm your payment.
-                </p>
+                    <h1 id="confirmation-heading">
+                        Thank You for Your Order!
+                    </h1>
 
-                <!-- Order Status -->
-                <div class="order-status-card">
-
-                    <h2>Order Status</h2>
-
-                    <p>
-                        <strong>Status:</strong>
-
-                        <span id="order-status">
-                            Awaiting verification
-                        </span>
+                    <p id="confirmation-message">
+                        Thank you for choosing 3W Ventures Honey.
+                        Your order details are displayed below.
+                        Contact us on WhatsApp to discuss your delivery
+                        or pickup arrangements.
                     </p>
 
-                    <p>
-                        <strong>Order Reference:</strong>
-
-                        <span id="order-reference">
-                            Will appear after order verification
-                        </span>
-                    </p>
-
-                    <p>
-                        <strong>Payment Status:</strong>
-
-                        <span id="payment-status">
-                            Checking payment
-                        </span>
-                    </p>
+                    <span class="success-badge">
+                        ✓ ORDER SUCCESS
+                    </span>
 
                 </div>
 
-                <!-- Order Summary -->
-                <div class="success-order-summary">
 
-                    <h2>Order Summary</h2>
+                <div class="card-content">
 
-                    <div id="success-order-items">
+                    <!-- ORDER STATUS -->
+
+                    <section aria-labelledby="status-heading">
+
+                        <h2 class="section-heading" id="status-heading">
+                            Order Information
+                        </h2>
+
+                        <div class="status-grid">
+
+                            <div class="status-box">
+                                <span class="status-label">
+                                    Order Status
+                                </span>
+
+                                <span
+                                    class="status-value success"
+                                    id="order-status"
+                                >
+                                    Success
+                                </span>
+                            </div>
+
+                            <div class="status-box">
+                                <span class="status-label">
+                                    Payment Status
+                                </span>
+
+                                <span
+                                    class="status-value success"
+                                    id="payment-status"
+                                >
+                                    Received
+                                </span>
+                            </div>
+
+                            <div class="status-box">
+                                <span class="status-label">
+                                    Order Reference
+                                </span>
+
+                                <span
+                                    class="status-value"
+                                    id="order-reference"
+                                >
+                                    Order Received
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ORDER SUMMARY -->
+
+                    <section
+                        class="order-section"
+                        aria-labelledby="summary-heading"
+                    >
+
+                        <h2
+                            class="section-heading"
+                            id="summary-heading"
+                        >
+                            Your Order Summary
+                        </h2>
+
+                        <div style="overflow-x: auto;">
+
+                            <table class="order-table">
+
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="success-order-items">
+
+                                    <tr>
+                                        <td colspan="3">
+                                            Loading order details...
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div
+                            class="empty-order"
+                            id="empty-order"
+                        >
+                            Your order summary is not available on this
+                            page. Please contact us on WhatsApp if you
+                            need help confirming your order details.
+                        </div>
+
+
+                        <!-- TOTALS -->
+
+                        <div class="order-totals">
+
+                            <div class="total-row">
+                                <span>Subtotal</span>
+
+                                <span id="success-subtotal">
+                                    ₦0.00
+                                </span>
+                            </div>
+
+                            <div class="total-row">
+                                <span>Delivery Fee</span>
+
+                                <span id="success-delivery-fee">
+                                    To be discussed
+                                </span>
+                            </div>
+
+                            <div class="total-row grand-total">
+                                <span>Total</span>
+
+                                <span id="success-total">
+                                    ₦0.00
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- WHATSAPP DELIVERY CONTACT -->
+
+                    <section
+                        class="delivery-box"
+                        aria-labelledby="delivery-heading"
+                    >
+
+                        <h2 id="delivery-heading">
+                            🚚 Let's Arrange Your Delivery!
+                        </h2>
 
                         <p>
-                            Your confirmed order items will appear here.
+                            We want to make sure your honey reaches you
+                            conveniently. Send us a message on WhatsApp
+                            so we can discuss your delivery address,
+                            delivery fee, preferred delivery time, or
+                            pickup arrangements.
                         </p>
 
-                    </div>
+                        <ul class="delivery-list">
 
-                    <div class="summary-row">
+                            <li>
+                                Discuss your delivery location.
+                            </li>
 
-                        <span>Honey Subtotal</span>
+                            <li>
+                                Confirm the delivery fee and timing.
+                            </li>
 
-                        <span id="success-subtotal">—</span>
+                            <li>
+                                Arrange pickup if that is more convenient.
+                            </li>
 
-                    </div>
+                            <li>
+                                Ask questions about your order.
+                            </li>
 
-                    <div class="summary-row">
+                        </ul>
 
-                        <span>Delivery Fee</span>
+                        <a
+                            href="https://wa.me/2348055181850"
+                            class="whatsapp-button"
+                            id="success-whatsapp"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span
+                                class="whatsapp-icon"
+                                aria-hidden="true"
+                            >
+                                ☎
+                            </span>
 
-                        <span id="success-delivery-fee">—</span>
+                            Discuss Delivery or Pickup on WhatsApp
+                        </a>
 
-                    </div>
-
-                    <div class="summary-row total-row">
-
-                        <strong>Total</strong>
-
-                        <strong id="success-total">—</strong>
-
-                    </div>
-
-                </div>
-
-                <!-- Delivery Information -->
-                <div class="success-delivery-information">
-
-                    <h2>Delivery Information</h2>
-
-                    <p>
-                        <strong>Delivery Address:</strong>
-
-                        <span id="success-delivery-address">
-                            Will appear after order verification
+                        <span class="whatsapp-note">
+                            Tap the button to chat directly with
+                            3W Ventures Honey.
                         </span>
-                    </p>
 
-                    <p>
-                        We deliver within Lagos State. Delivery arrangements
-                        will be communicated using the contact details
-                        provided with your order.
-                    </p>
+                    </section>
+
+
+                    <!-- WHAT HAPPENS NEXT -->
+
+                    <section
+                        class="next-steps"
+                        aria-labelledby="next-steps-heading"
+                    >
+
+                        <h2 id="next-steps-heading">
+                            What Happens Next?
+                        </h2>
+
+                        <div class="step">
+
+                            <div class="step-number">1</div>
+
+                            <div class="step-content">
+                                <strong>Contact Us</strong>
+
+                                <p>
+                                    Message us on WhatsApp to discuss
+                                    delivery or pickup.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="step">
+
+                            <div class="step-number">2</div>
+
+                            <div class="step-content">
+                                <strong>Confirm the Arrangements</strong>
+
+                                <p>
+                                    Agree on your delivery address,
+                                    delivery fee, and preferred timing.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="step">
+
+                            <div class="step-number">3</div>
+
+                            <div class="step-content">
+                                <strong>Enjoy Your Honey!</strong>
+
+                                <p>
+                                    We will coordinate the fulfilment
+                                    of your order with you.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- PAGE BUTTONS -->
+
+                    <div class="action-buttons">
+
+                        <a
+                            href="shop.html"
+                            class="button button-primary"
+                        >
+                            Continue Shopping
+                        </a>
+
+                        <a
+                            href="index.html"
+                            class="button button-secondary"
+                        >
+                            Back to Home
+                        </a>
+
+                    </div>
 
                 </div>
 
-                <!-- Actions -->
-                <div class="success-actions">
+            </section>
 
-                    <a href="shop.html" class="button">
-                        Continue Shopping
-                    </a>
+        </div>
+    </main>
 
-                    <a href="index.html" class="secondary-button">
-                        Return to Homepage
-                    </a>
 
-                </div>
+    <!-- FOOTER -->
 
-                <!-- Payment Pending Notice -->
-                <div id="payment-pending-notice">
+    <footer class="site-footer">
 
-                    <h2>Payment Still Pending?</h2>
+        <div class="container">
 
-                    <p>
-                        If you have completed payment but your status has
-                        not updated, please wait for verification before
-                        attempting another payment.
-                    </p>
+            <div class="footer-brand">
+                3W Ventures <span>Honey</span>
+            </div>
 
-                    <p>
-                        Contact us if you need assistance.
-                    </p>
+            <p>
+                Natural sweetness, straight from nature.
+            </p>
 
-                </div>
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+
+                <a href="shop.html">Shop</a>
+
+                <a href="about.html">About Us</a>
+
+                <a href="contact(1).html">Contact Us</a>
 
             </div>
 
-        </section>
-
-        <!-- Customer Support -->
-        <section class="success-support">
-
-            <h2>We're Here to Help</h2>
-
-            <p>
-                If you have questions about your order, contact us using
-                the details below.
-            </p>
-
-            <p>
-                <strong>Phone:</strong>
-
-                <a href="tel:+2348055181850">
-                    08055181850
-                </a>
-            </p>
-
-            <p>
-                <strong>Email:</strong>
-
-                <a href="mailto:ajoselateephat0@gmail.com">
-                    ajoselateephat0@gmail.com
-                </a>
-            </p>
-
-            <p>
-                <a
-                    href="https://wa.me/2348055181850"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Contact Us on WhatsApp
-                </a>
-            </p>
-
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-
-        <div class="footer-brand">
-
-            <a href="index.html">
-                <span class="brand-name">3W VENTURES HONEY</span>
-            </a>
-
-            <p>Nature's Liquid Gold.</p>
-
-            <p>Delivering honey across Lagos State.</p>
-
-        </div>
-
-        <div class="footer-links">
-
-            <h3>Explore</h3>
-
-            <a href="index.html">Home</a>
-            <a href="shop.html">Shop Honey</a>
-            <a href="about.html">Our Story</a>
-            <a href="contact.html">Contact Us</a>
-
-        </div>
-
-        <div class="footer-links">
-
-            <h3>Customer Care</h3>
-
-            <a href="cart.html">Shopping Cart</a>
-            <a href="contact.html">Contact Support</a>
-            <a href="contact.html">Delivery Information</a>
-
-        </div>
-
-        <div class="footer-contact">
-
-            <h3>Contact Us</h3>
-
-            <p>
-                Phone:
-                <a href="tel:+2348055181850">08055181850</a>
-            </p>
-
             <p>
                 Email:
-                <a href="mailto:ajoselateephat0@gmail.com">
+                <a
+                    href="mailto:ajoselateephat0@gmail.com"
+                    style="color: #ffffff;"
+                >
                     ajoselateephat0@gmail.com
                 </a>
             </p>
 
-        </div>
-
-        <div class="footer-bottom">
-
             <p>
-                &copy; 2026 3W Ventures Honey. All rights reserved.
+                &copy; <span id="current-year"></span>
+                3W Ventures Honey. All rights reserved.
             </p>
 
         </div>
 
     </footer>
-    <script src="java/java.js" defer></script>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            /*
+             * BUSINESS SETTINGS
+             *
+             * Update these values if your business details change.
+             */
+
+            const WHATSAPP_NUMBER = "2348055181850";
+
+            const CART_STORAGE_KEY = "3w_honey_pending_order";
+
+
+            /*
+             * BASIC HELPERS
+             */
+
+            const getElement = (id) => {
+                return document.getElementById(id);
+            };
+
+            const formatNaira = (amount) => {
+                const value = Number(amount);
+
+                if (!Number.isFinite(value)) {
+                    return "₦0.00";
+                }
+
+                return "₦" + value.toLocaleString("en-NG", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            };
+
+            const getFirstValue = (object, keys) => {
+
+                if (!object || typeof object !== "object") {
+                    return undefined;
+                }
+
+                for (const key of keys) {
+
+                    if (
+                        object[key] !== undefined &&
+                        object[key] !== null &&
+                        object[key] !== ""
+                    ) {
+                        return object[key];
+                    }
+                }
+
+                return undefined;
+            };
+
+
+            /*
+             * ORDER REFERENCE
+             *
+             * Read the payment reference from the URL when available.
+             */
+
+            const params = new URLSearchParams(window.location.search);
+
+            const reference =
+                params.get("reference") ||
+                params.get("trxref") ||
+                params.get("ref");
+
+            getElement("order-reference").textContent =
+                reference || "Order Received";
+
+
+            /*
+             * CURRENT YEAR
+             */
+
+            getElement("current-year").textContent =
+                new Date().getFullYear();
+
+
+            /*
+             * LOAD ORDER DETAILS
+             *
+             * This supports several common order-data formats.
+             * If your checkout uses a different format, its exact
+             * structure may require adjusting this section.
+             */
+
+            let pendingOrder = null;
+
+            try {
+
+                const savedOrder = localStorage.getItem(
+                    CART_STORAGE_KEY
+                );
+
+                if (savedOrder) {
+                    pendingOrder = JSON.parse(savedOrder);
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to read saved order details:",
+                    error
+                );
+
+            }
+
+
+            /*
+             * IDENTIFY PRODUCTS
+             */
+
+            let products = [];
+
+            if (Array.isArray(pendingOrder)) {
+
+                products = pendingOrder;
+
+            } else if (pendingOrder && typeof pendingOrder === "object") {
+
+                if (Array.isArray(pendingOrder.items)) {
+
+                    products = pendingOrder.items;
+
+                } else if (Array.isArray(pendingOrder.cart)) {
+
+                    products = pendingOrder.cart;
+
+                } else if (Array.isArray(pendingOrder.products)) {
+
+                    products = pendingOrder.products;
+
+                } else if (Array.isArray(pendingOrder.orderItems)) {
+
+                    products = pendingOrder.orderItems;
+
+                } else if (Array.isArray(pendingOrder.cartItems)) {
+
+                    products = pendingOrder.cartItems;
+
+                }
+
+            }
+
+
+            /*
+             * DISPLAY PRODUCTS
+             */
+
+            const orderItemsContainer =
+                getElement("success-order-items");
+
+            const emptyOrderMessage =
+                getElement("empty-order");
+
+            orderItemsContainer.innerHTML = "";
+
+            let calculatedSubtotal = 0;
+
+            if (products.length > 0) {
+
+                products.forEach(function (product) {
+
+                    const name =
+                        getFirstValue(product, [
+                            "name",
+                            "productName",
+                            "title",
+                            "product_name"
+                        ]) || "Honey Product";
+
+                    const quantityValue =
+                        getFirstValue(product, [
+                            "quantity",
+                            "qty",
+                            "count"
+                        ]);
+
+                    const quantity = Math.max(
+                        1,
+                        Number(quantityValue) || 1
+                    );
+
+                    const priceValue =
+                        getFirstValue(product, [
+                            "price",
+                            "unitPrice",
+                            "unit_price",
+                            "amount"
+                        ]);
+
+                    const price = Number(priceValue) || 0;
+
+                    const lineTotal =
+                        Number(
+                            getFirstValue(product, [
+                                "total",
+                                "lineTotal",
+                                "line_total",
+                                "subtotal"
+                            ])
+                        ) || price * quantity;
+
+                    calculatedSubtotal += lineTotal;
+
+
+                    const row = document.createElement("tr");
+
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = name;
+
+                    const quantityCell = document.createElement("td");
+                    quantityCell.textContent = quantity;
+
+                    const priceCell = document.createElement("td");
+                    priceCell.textContent = formatNaira(lineTotal);
+
+                    row.appendChild(nameCell);
+                    row.appendChild(quantityCell);
+                    row.appendChild(priceCell);
+
+                    orderItemsContainer.appendChild(row);
+
+                });
+
+                emptyOrderMessage.style.display = "none";
+
+            } else {
+
+                emptyOrderMessage.style.display = "block";
+
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+
+                cell.colSpan = 3;
+                cell.textContent = "Order details unavailable.";
+
+                row.appendChild(cell);
+                orderItemsContainer.appendChild(row);
+
+            }
+
+
+            /*
+             * SUBTOTAL, DELIVERY FEE AND TOTAL
+             */
+
+            const savedSubtotal =
+                pendingOrder &&
+                typeof pendingOrder === "object"
+                    ? getFirstValue(pendingOrder, [
+                        "subtotal",
+                        "subTotal",
+                        "cartSubtotal",
+                        "cart_subtotal"
+                    ])
+                    : undefined;
+
+            const subtotal = Number(savedSubtotal) || calculatedSubtotal;
+
+
+            const savedDeliveryFee =
+                pendingOrder &&
+                typeof pendingOrder === "object"
+                    ? getFirstValue(pendingOrder, [
+                        "deliveryFee",
+                        "delivery_fee",
+                        "shippingFee",
+                        "shipping_fee"
+                    ])
+                    : undefined;
+
+            const deliveryFee = Number(savedDeliveryFee);
+
+            const savedTotal =
+                pendingOrder &&
+                typeof pendingOrder === "object"
+                    ? getFirstValue(pendingOrder, [
+                        "total",
+                        "grandTotal",
+                        "grand_total",
+                        "orderTotal",
+                        "order_total"
+                    ])
+                    : undefined;
+
+            const total = Number(savedTotal);
+
+
+            getElement("success-subtotal").textContent =
+                formatNaira(subtotal);
+
+
+            if (
+                savedDeliveryFee !== undefined &&
+                Number.isFinite(deliveryFee)
+            ) {
+
+                getElement("success-delivery-fee").textContent =
+                    formatNaira(deliveryFee);
+
+            } else {
+
+                getElement("success-delivery-fee").textContent =
+                    "To be discussed";
+
+            }
+
+
+            if (
+                savedTotal !== undefined &&
+                Number.isFinite(total)
+            ) {
+
+                getElement("success-total").textContent =
+                    formatNaira(total);
+
+            } else if (
+                savedDeliveryFee !== undefined &&
+                Number.isFinite(deliveryFee)
+            ) {
+
+                getElement("success-total").textContent =
+                    formatNaira(subtotal + deliveryFee);
+
+            } else {
+
+                getElement("success-total").textContent =
+                    formatNaira(subtotal);
+
+            }
+
+
+            /*
+             * WHATSAPP MESSAGE
+             * Build the message from the saved order items.
+             */
+
+            const whatsappLines = [
+                "Hello 3W Ventures Honey!",
+                "",
+                "I have placed an order and would like to arrange delivery or pickup.",
+                "Order reference: " + (reference || "Order Received"),
+                "",
+                "MY ORDER:"
+            ];
+
+            if (products.length > 0) {
+                products.forEach(function (product, index) {
+                    const name = getFirstValue(product, [
+                        "name", "productName", "title", "product_name", "label"
+                    ]) || (product.product && (product.product.name || product.product.title)) || "Honey Product " + (index + 1);
+
+                    const quantityValue = getFirstValue(product, ["quantity", "qty", "count"]);
+                    const quantity = Math.max(1, Number(quantityValue) || 1);
+
+                    const litresValue = getFirstValue(product, ["litres", "liter", "litre", "size", "volume"]);
+                    let size = "";
+                    if (litresValue !== undefined && litresValue !== null && litresValue !== "") {
+                        if (typeof litresValue === "number" || !Number.isNaN(Number(litresValue))) {
+                            const litres = Number(litresValue);
+                            size = litres < 1 ? (litres === 0.125 ? "⅛ Litre" : litres === 0.25 ? "¼ Litre" : litres === 0.5 ? "½ Litre" : litres + " Litre") : litres + (litres === 1 ? " Litre" : " Litres");
+                        } else {
+                            size = String(litresValue);
+                        }
+                    }
+
+                    const priceValue = getFirstValue(product, ["price", "unitPrice", "unit_price", "amount"]);
+                    const unitPrice = Number(priceValue) || 0;
+                    const lineTotalValue = getFirstValue(product, ["total", "lineTotal", "line_total", "subtotal"]);
+                    const lineTotal = Number(lineTotalValue) || unitPrice * quantity;
+                    const itemDescription = "• " + name + (size ? " (" + size + ")" : "") + " — Qty: " + quantity + " — " + formatNaira(lineTotal);
+                    whatsappLines.push(itemDescription);
+                });
+            } else {
+                whatsappLines.push("Order items could not be read from the saved order. Please help me confirm my order.");
+            }
+
+            whatsappLines.push("");
+            whatsappLines.push("Subtotal: " + formatNaira(subtotal));
+            whatsappLines.push("Delivery fee: To be discussed");
+            whatsappLines.push("Total before delivery: " + formatNaira(subtotal));
+            whatsappLines.push("");
+            whatsappLines.push("Please confirm my order and let me know the delivery fee, delivery time, or pickup options. Thank you!");
+
+            const whatsappURL = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(whatsappLines.join("\n"));
+            getElement("success-whatsapp").href = whatsappURL;
+
+        });
+    </script>
 
 </body>
 </html>
