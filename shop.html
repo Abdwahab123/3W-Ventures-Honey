@@ -83,7 +83,7 @@
 
                 <div class="shop-hero-visual">
                     <img
-                        src="images/honey-hero.jpg"
+                        src="https://i.ibb.co/DDKwvQT6/download.jpg"
                         alt="Honey jar and golden honey"
                         fetchpriority="high">
 
@@ -133,7 +133,7 @@
 
                         <div class="shop-product-image">
                             <img
-                                src="images/honey-125ml.jpg"
+                                src="https://i.ibb.co/JRM8fcsT/127-EA885-6-E93-4-C2-A-AC1-A-484815-C1-A9-A3.png"
                                 alt="⅛ litre honey jar"
                                 loading="lazy">
 
@@ -195,7 +195,7 @@
 
                         <div class="shop-product-image">
                             <img
-                                src="images/honey-250ml.jpg"
+                                src="https://i.ibb.co/cc3QNKNG/F1-A08872-77-EF-4-EB9-AA9-F-56-AAE7-B7-B4-CE.png"
                                 alt="¼ litre honey jar"
                                 loading="lazy">
 
@@ -257,7 +257,7 @@
 
                         <div class="shop-product-image">
                             <img
-                                src="images/honey-500ml.jpg"
+                                src="https://i.ibb.co/5Xffsqnz/CD44-A8-CD-DB54-4-F91-AD48-9-CA750-DBF141.png"
                                 alt="½ litre honey jar"
                                 loading="lazy">
 
@@ -474,9 +474,35 @@
                         card.dataset.productSize = product.size;
                         card.dataset.generatedProduct = "true";
 
-                        const image = product.litres === 1
-                            ? "images/honey-hero.jpg"
-                            : "images/honey-500ml.jpg";
+                        const imageLinks = {
+    1: "https://i.ibb.co/BK4sY8JP/DB82-A609-D0-A2-45-F8-A773-02-E5-F6-EA4-B5-C.png",
+    2: "https://i.ibb.co/PzMnVdF3/402-B1579-4-DFE-4-C17-B7-F1-2219825-F26-BA.png",
+    3: "https://i.ibb.co/m5C25pb6/69823104-D592-40-A4-8276-540171-ED7-AD7.png",
+    4: "https://i.ibb.co/bRDsjWQ7/1-ED18588-7-EE0-4325-99-F1-B76296-F577-D2.png",
+    5: "https://i.ibb.co/MDT6Q39b/93063166-B473-45-E9-BA19-8-E9-FFE0-F0-FB0.png",
+    6: "https://i.ibb.co/v6PyMHB9/428-EACEE-CCDC-49-C3-B684-B192-CB8064-CF.png",
+    7: "https://i.ibb.co/SXsdcQq9/BB81363-A-EF5-A-4-EA7-BA60-52-FED12-EDEAD.png",
+    8: "https://i.ibb.co/8g9KPmg4/0-AD790-F5-08-DA-4-F82-8-DEF-F90-BA2-B035-E3.png",
+    9: "https://i.ibb.co/jkydMLWz/1-D752-BC8-B2-A2-4-E08-9-EC1-FC8-A9-A4-BE9-BF.png",
+    10: "",
+    11: "",
+    12: "",
+    13: "",
+    14: "",
+    15: "",
+    16: "",
+    17: "",
+    18: "",
+    19: "",
+    20: "",
+    21: "",
+    22: "",
+    23: "",
+    24: "",
+    25: ""
+};
+
+const image = imageLinks[product.litres] || "";
 
                         card.innerHTML = `
                             <div class="shop-product-image">

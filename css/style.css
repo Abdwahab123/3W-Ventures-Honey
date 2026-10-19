@@ -3467,3 +3467,114 @@ body > header:has(> .announcement-bar) > nav:not(.main-navigation):not(.main-nav
         font-size: .84rem;
     }
 }
+
+/* HERO IMAGE */
+.hero-image {
+    width: 100%;
+    max-width: 600px;
+    min-width: 0;
+}
+
+.hero-image-photo {
+    display: block;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+}
+
+/* HONEY PRODUCT IMAGES */
+.product-image-link {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.product-image {
+    display: block;
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* BEEKEEPER / OUR STORY IMAGE */
+.story-image {
+    width: 100%;
+    max-width: 550px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.story-image img {
+    display: block;
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+}
+
+/* MOBILE IMAGE SIZES */
+@media (max-width: 768px) {
+    .hero-image-photo {
+        height: 350px;
+    }
+
+    .product-image {
+        height: 220px;
+    }
+
+    .story-image img {
+        height: 300px;
+    }
+}
+
+/* =========================================
+   SHOP HERO IMAGE — PROFESSIONAL DESIGN
+   ========================================= */
+
+.honey-shop-page .shop-hero-visual {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 420px;
+    margin: 0 auto;
+    padding: 12px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #fff0c2, #e8ad32, #8b5718);
+    box-shadow: 0 15px 35px rgba(100, 62, 10, 0.22);
+    box-sizing: border-box;
+}
+
+.honey-shop-page .shop-hero-visual > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .honey-shop-page .shop-hero-visual {
+        max-width: 100%;
+        height: 360px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .honey-shop-page .shop-hero-visual {
+        height: 280px;
+        padding: 8px;
+        border-radius: 18px;
+    }
+
+    .honey-shop-page .shop-hero-visual > img {
+        border-radius: 12px;
+    }
+}
